@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const login = require('./routes/loginroutes');
 
 const app = express();
 var router = express.Router();
@@ -17,11 +16,6 @@ app.use(function(req, res, next) {
 });
 
 app.set('view engine', 'ejs');
-
-//routes to handle user registration
-router.post('/register',login.register);
-router.post('/login',login.login)
-app.use('/api', router);
 
 app.listen(3000, function() {
   console.log("Server Started at Port 3000");
