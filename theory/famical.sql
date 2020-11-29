@@ -83,6 +83,7 @@ DROP TABLE IF EXISTS `family`;
 CREATE TABLE `family` (
   `userid` varchar(25) NOT NULL,
   `memberid` varchar(25) NOT NULL,
+  `type` varchar(15) DEFAULT NULL,
   KEY `userid` (`userid`),
   KEY `memberid` (`memberid`),
   CONSTRAINT `family_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `patient` (`userid`),
@@ -193,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-29 13:04:58
+-- Dump completed on 2020-11-30  0:23:11

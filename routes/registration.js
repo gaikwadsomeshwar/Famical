@@ -4,42 +4,76 @@ var db = require('../database');
 
 // to display registration form
 router.get('/register', function(req, res, next) {
-  res.render('registration-form');
+  res.render('patientReg');
 });
 
 // to store user input detail on post request
 router.post('/register', function(req, res, next) {
 
-  inputData = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    email_address: req.body.email_address,
-    gender: req.body.gender,
-    password: req.body.password,
-    confirm_password: req.body.confirm_password
+  personal_details = {
+    userid: req.body.userid,
+    fname: req.body.fname,
+    lname: req.body.lname,
+    phno: req.body.phno,
+    email: req.body.email,
+    dob: req.body.dob,
+    stno: req.body.stno,
+    stname: req.body.stname,
+    city: req.body.city,
+    state: req.body.state,
+    zipcode: req.body.zipcode,
   }
-  // check unique email address
-  var sql = 'SELECT * FROM registration WHERE email_address =?';
-  db.query(sql, [inputData.email_address], function(err, data, fields) {
-    if (err) throw err
-    if (data.length > 1) {
-      var msg = inputData.email_address + "was already exist";
-    }
-    else if (inputData.confirm_password != inputData.password) {
-      var msg = "Password & Confirm Password is not Matched";
-    }
-    else {
-      // save users data into database
-      var sql = 'INSERT INTO registration SET ?';
-      db.query(sql, inputData, function(err, data) {
-        if (err) throw err;
-      });
-      var msg = "Your are successfully registered";
-    }
-    res.render('registration-form', {
-      alertMsg: msg
+
+  user_details = {
+    userid: req.body.userid,
+    password: req.body.password
+  }
+
+  // check password
+  if (user_details.password != req.body.confirm_password) {
+    var msg = "Password & Confirm Password is not Matched";
+  }
+
+  else {
+    // check unique email address
+    var emailCheck = 'SELECT * FROM personal_details WHERE email =?';
+    db.query(emailCheck, [personal_details.email], function(err, data, fields) {
+      if (err) throw err
+      if (data.length > 1) {
+        var msg = personal_details.email + " already exists";
+      }
+
+      else {
+        // check phone number
+        var phnoCheck = 'SELECT * FROM personal_details WHERE phno =?';
+        db.query(phnoCheck, [personal_details.phno], function(err, data, fields) {
+          if (err) throw err
+          if (data.length > 1) {
+            var msg = personal_details.phno + " already exists";
+          }
+
+          else {
+            // save users login data into database
+            var sql1 = 'INSERT INTO users SET ?';
+            db.query(sql1, user_details, function(err, data) {
+              if (err) throw err;
+
+              // save users personal data into database
+              var sql2 = 'INSERT INTO personal_details SET ?';
+              db.query(sql2, personal_details, function(err, data) {
+                if (err) throw err;
+                var msg = "Your are successfully registered";
+              });
+            });
+          }
+        });
+      }
     });
-  })
+  }
+
+  res.render('patientReg', {
+    alertMsg: msg
+  });
 });
 
 module.exports = router;
