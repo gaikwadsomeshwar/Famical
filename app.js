@@ -2,7 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 var session = require('express-session')
-
+const path = require("path");
 // routes
 var loginRouter = require('./routes/login');
 var patientRegistrationRouter = require('./routes/patient_registration');
