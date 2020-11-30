@@ -12,6 +12,8 @@ var loginRouter = require('./routes/login');
 var patientRegistrationRouter = require('./routes/patient_registration');
 var doctorRegistrationRouter = require('./routes/doctor_registration');
 var index = require('./routes/login');
+var dash = require('./routes/dashboard');
+var logout = require('./routes/logout');
 const app = express();
 var router = express.Router();
 const publicdir = path.join(__dirname, './public');
@@ -31,10 +33,11 @@ app.use(session({
 app.use(express.static("public"));
 
 //using routes
-app.use('/', loginRouter);
 app.use('/',patientRegistrationRouter);
 app.use('/',doctorRegistrationRouter);
 app.use('/',index);
+app.use('/',dash);
+app.use('/',logout);
 
 
 // To serve cross-domain requests

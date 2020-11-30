@@ -5,16 +5,13 @@ var db = require('../database');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
-var msg = "";
-
 // to display registration form
 router.get('/register_doctor', function(req, res, next) {
-  res.render('doctorReg', {alertMsg: msg} );
- // msg = "";
+  res.render('doctorReg');
 });
 
 // to store user input detail on post request
-router.post('/register_doctor', function(req, res, next) {
+router.post('/register_doctor', async function(req, res, next) { 
 
   personal_details = {
     userid: req.body.userid,
@@ -45,9 +42,14 @@ router.post('/register_doctor', function(req, res, next) {
     department: req.body.department
   }
 
+  var pass = user_details.password;
+  var hashedpwd = await bcrypt.hash(user_details.password, 8);
+  user_details.password = hashedpwd;
+  console.log(user_details.password);
+
   // check password
-  if (user_details.password != req.body.confirm_password) {
-    msg = "Password & Confirm Password is not Matched";
+  if (pass != req.body.confirm_password) {
+    var msg = "Password & Confirm Password is not Matched";
   }
 
   else {
@@ -55,13 +57,8 @@ router.post('/register_doctor', function(req, res, next) {
     var userCheck = 'SELECT * FROM users WHERE userid =?';
     db.query(userCheck, [user_details.userid], function(err, data, fields) {
       if (err) throw err
-<<<<<<< HEAD
-      if (data.length > 0) {
-        msg = personal_details.email + " already exists";
-=======
       if (data.length > 1) {
         var msg = user_details.userid + " already exists";
->>>>>>> dcb89a04fec6e15988022484803c76612a820ba4
       }
 
       else {
@@ -70,11 +67,7 @@ router.post('/register_doctor', function(req, res, next) {
         db.query(emailCheck, [personal_details.email], function(err, data, fields) {
           if (err) throw err
           if (data.length > 1) {
-<<<<<<< HEAD
-            msg = personal_details.phno + " already exists";
-=======
             var msg = personal_details.email + " already exists";
->>>>>>> dcb89a04fec6e15988022484803c76612a820ba4
           }
 
           else {
@@ -105,14 +98,6 @@ router.post('/register_doctor', function(req, res, next) {
                       db.query(sql2, personal_details, function(err, data) {
                         if (err) throw err;
 
-<<<<<<< HEAD
-              // save users personal data into database
-              var sql2 = 'INSERT INTO personal_details SET ?';
-              db.query(sql2, personal_details, function(err, data) {
-                if (err) throw err;
-                msg = "You are successfully registered";
-              });
-=======
                         // save professional details into database
                         var sql3 = 'INSERT INTO doctor SET ?';
                         db.query(sql3, professional_details, function(err, data) {
@@ -124,14 +109,17 @@ router.post('/register_doctor', function(req, res, next) {
                   }
                 });
               }
->>>>>>> dcb89a04fec6e15988022484803c76612a820ba4
             });
           }
         });
       }
     });
   }
-  res.redirect('/register_doctor');
+
+  res.render('doctorReg', {
+    alertMsg: msg
+  });
 });
 
 module.exports = router;
+
