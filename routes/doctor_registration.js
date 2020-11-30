@@ -3,12 +3,12 @@ var router = express.Router();
 var db = require('../database');
 
 // to display registration form
-router.get('/register', function(req, res, next) {
-  res.render('patientReg');
+router.get('/register_doctor', function(req, res, next) {
+  res.render('doctorReg');
 });
 
 // to store user input detail on post request
-router.post('/register', function(req, res, next) {
+router.post('/register_doctor', function(req, res, next) {
 
   personal_details = {
     userid: req.body.userid,
@@ -22,11 +22,13 @@ router.post('/register', function(req, res, next) {
     city: req.body.city,
     state: req.body.state,
     zipcode: req.body.zipcode,
+    gender: req.body.gender
   }
 
   user_details = {
     userid: req.body.userid,
-    password: req.body.password
+    password: req.body.password,
+    type: "patient"
   }
 
   // check password
@@ -71,7 +73,7 @@ router.post('/register', function(req, res, next) {
     });
   }
 
-  res.render('patientReg', {
+  res.render('doctorReg', {
     alertMsg: msg
   });
 });

@@ -4,7 +4,7 @@
 <head>
 
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
   <link rel="stylesheet" type="text/css" href="queries.css">
   <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,300italic' rel='stylesheet' type='text/css'>
 
@@ -15,9 +15,9 @@
   <header>
     <nav>
       <div class="row">
-        <img src="logo.jpg" alt="Famical logo" class="logo">
+        <img src="images/logo.jpg" alt="Famical logo" class="logo">
         <ul class="main-nav">
-          <li><a href="sl1index.html">Home</a></li>
+          <li><a href="login">Home</a></li>
           <li><a href="#"> Contact Us</a></li>
           <li><a href="#form">LogIn</a></li>
           <li><a href="#who">Sign up</a></li>
@@ -39,21 +39,21 @@
       <h2>LogIn</h2>
     </div>
     <div class="row">
-      <form method="post" action="#" class="contact-form">
+      <form method="post" action="login" class="contact-form">
         <div class="row">
           <div class="col span-1-of-3">
-            <label for="user">User ID</label>
+            <label>User ID</label>
           </div>
           <div class="col span-2-of-3">
-            <input type="text" name="user" id="user" placeholder="User ID" required>
+            <input type="text" name="userid" placeholder="User ID" required>
           </div>
         </div>
         <div class="row">
           <div class="col span-1-of-3">
-            <label for="password">Password</label>
+            <label>Password</label>
           </div>
           <div class="col span-2-of-3">
-            <input type="text" name="password" id="password" placeholder="Password" required>
+            <input type="password" name="password" placeholder="Password" required>
           </div>
         </div>
 
@@ -79,8 +79,8 @@
         <label>&nbsp;</label>
       </div>
       <div class="col span-2-of-3">
-        <a class="btn btn-full" href="doctorReg.html">I am Doctor </a>
-        <a class="btn btn-ghost" href="patientReg.html">I am Patient</a>
+        <a class="btn btn-full" href="register_doctor">I am Doctor </a>
+        <a class="btn btn-ghost" href="register_patient">I am Patient</a>
       </div>
     </div>
   </section>
@@ -99,7 +99,7 @@
     </div>
     <div class="row">
       <p>
-        Copyright &copy; 2015 by Famical, all rights reserved.
+        Copyright &copy; 2020 by Famical, all rights reserved.
       </p>
     </div>
   </footer>

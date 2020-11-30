@@ -1,16 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../database');
-// another routes also appear here
+var db=require('../database');
 
-// this script to fetch data from MySQL databse table
-router.get('/user-list', function(req, res, next) {
-
-    var sql='SELECT * FROM login';
-    db.query(sql, function (err, data, fields) {
-    if (err) throw err;
-    res.render('user-list', { title: 'User List', userData: data});
-  });
+/* GET users listing. */
+router.get('/login', function(req, res, next) {
+  res.render('index.ejs');
 });
 
 module.exports = router;
