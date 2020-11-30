@@ -7,16 +7,17 @@ var morgan = require('morgan');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 
+const app = express();
+var router = express.Router();
+
 // routes
 var loginRouter = require('./routes/login');
 var patientRegistrationRouter = require('./routes/patient_registration');
 var doctorRegistrationRouter = require('./routes/doctor_registration');
-var index = require('./routes/login');
-var dash = require('./routes/dashboard');
-var logout = require('./routes/logout');
-const app = express();
-var router = express.Router();
-const publicdir = path.join(__dirname, './public');
+var dashRouter = require('./routes/dashboard');
+var professionalDetailsRouter = require('./routes/professional_details');
+var medicalDetailsRouter = require('./routes/medical_details');
+var logoutRouter = require('./routes/logout');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -35,10 +36,11 @@ app.use(express.static("public"));
 //using routes
 app.use('/',patientRegistrationRouter);
 app.use('/',doctorRegistrationRouter);
-app.use('/',index);
-app.use('/',dash);
-app.use('/',logout);
-
+app.use('/',loginRouter);
+app.use('/',dashRouter);
+app.use('/',professionalDetailsRouter);
+app.use('/',medicalDetailsRouter);
+app.use('/',logoutRouter);
 
 // To serve cross-domain requests
 app.use(function(req, res, next) {
@@ -48,10 +50,6 @@ app.use(function(req, res, next) {
 });
 
 app.set('view engine', 'ejs');
-
-
-
-
 
 app.listen(3000, function() {
   console.log("Server Started at Port 3000");

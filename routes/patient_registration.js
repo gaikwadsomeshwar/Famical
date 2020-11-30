@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../database');
+var bcrypt = require('bcryptjs');
+
 
 // to display registration form
 router.get('/register_patient', function(req, res, next) {
@@ -8,7 +10,7 @@ router.get('/register_patient', function(req, res, next) {
 });
 
 // to store user input detail on post request
-router.post('/register_patient', function(req, res, next) {
+router.post('/register_patient', async function(req, res, next) {
 
   personal_details = {
     userid: req.body.userid,
@@ -22,17 +24,23 @@ router.post('/register_patient', function(req, res, next) {
     city: req.body.city,
     state: req.body.state,
     zipcode: req.body.zipcode,
-    gender: req.body.gender
+    gender: req.body.gender,
+    type: "patient"
   }
 
   user_details = {
     userid: req.body.userid,
     password: req.body.password,
-    type: "patient"
   }
 
+  var pass = user_details.password;
+  var hashedpwd = await bcrypt.hash(user_details.password, 8);
+  user_details.password = hashedpwd;
+  console.log(pass);
+  console.log(user_details.password);
+
   // check password
-  if (user_details.password != req.body.confirm_password) {
+  if (pass != req.body.confirm_password) {
     var msg = "Password & Confirm Password is not Matched";
   }
 

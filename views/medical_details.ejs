@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Dashboard</title>
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+  <h1>Medical History</h1>
+  <hr />
+
+  <a class="btn btn-primary" href="dashboard" role="button">Personal Details</a>
+  <a class="btn btn-primary" href="medical_details" role="button">Medical History</a>
+
+  <table>
+    <tr>
+      <td>Weight: </td>
+      <td><%=data1[0].weight%></td>
+    </tr>
+    <tr>
+      <td>Height: </td>
+      <td><%=data1[0].height%></td>
+    </tr>
+    <tr>
+      <td>Blood Pressure: </td>
+      <td><%=data1[0].bp%></td>
+    </tr>
+    <tr>
+      <td>Blood Group: </td>
+      <td><%=data1[0].bldgrp%></td>
+    </tr>
+    <tr>
+      <td>Allergies: </td>
+      <td><%=data1[0].allergies%></td>
+    </tr>
+  </table>
+  <hr>
+
+  <table>
+    <tr>
+      <td>Consult Date: </td>
+      <td><%=data2[0].cdate%></td>
+    </tr>
+    <tr>
+      <td>Doc ID: </td>
+      <td><%=data2[0].docid%></td>
+    </tr>
+    <tr>
+      <td>Prescriptions: </td>
+      <td><%=data2[0].prescriptions%></td>
+    </tr>
+    <tr>
+      <td>Medical Test(s): </td>
+      <td><%=data2[0].medtests%></td>
+    </tr>
+    <tr>
+      <td>Diagnosis: </td>
+      <td><%=data2[0].diagnosis%></td>
+    </tr>
+  </table>
+
+  <a class="btn btn-primary" href="/logout" role="button">Logout</a>
+
+</body>
+
+</html>

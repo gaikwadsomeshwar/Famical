@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../database');
 var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
+
 
 // to display registration form
 router.get('/register_doctor', function(req, res, next) {
@@ -11,7 +11,7 @@ router.get('/register_doctor', function(req, res, next) {
 });
 
 // to store user input detail on post request
-router.post('/register_doctor', async function(req, res, next) { 
+router.post('/register_doctor', async function(req, res, next) {
 
   personal_details = {
     userid: req.body.userid,
@@ -25,13 +25,13 @@ router.post('/register_doctor', async function(req, res, next) {
     city: req.body.city,
     state: req.body.state,
     zipcode: req.body.zipcode,
-    gender: req.body.gender
+    gender: req.body.gender,
+    type: "doctor"
   }
 
   user_details = {
     userid: req.body.userid,
     password: req.body.password,
-    type: "doctor"
   }
 
   professional_details = {
@@ -45,6 +45,7 @@ router.post('/register_doctor', async function(req, res, next) {
   var pass = user_details.password;
   var hashedpwd = await bcrypt.hash(user_details.password, 8);
   user_details.password = hashedpwd;
+  console.log(pass);
   console.log(user_details.password);
 
   // check password
@@ -122,4 +123,3 @@ router.post('/register_doctor', async function(req, res, next) {
 });
 
 module.exports = router;
-

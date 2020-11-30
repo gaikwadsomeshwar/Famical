@@ -161,7 +161,6 @@ CREATE TABLE `personal_details` (
 
 LOCK TABLES `personal_details` WRITE;
 /*!40000 ALTER TABLE `personal_details` DISABLE KEYS */;
-INSERT INTO `personal_details` VALUES ('12345','1','1',1,'someshwafr@gmail.com','1999-12-15','12','12','12','Kerala',12341,'Male'),('33256','Someshwar','Gaikwad',7775069747,'gaikwadsomeshwar6@gmail.com','1999-12-15','94/A/3/1','Mundhwa','Pune','Maharashtra',411036,'Male');
 /*!40000 ALTER TABLE `personal_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +185,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('12345','12345','doctor'),('33256','123456','patient');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -199,4 +197,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-30 14:45:06
+-- Dump completed on 2020-11-30 21:29:13

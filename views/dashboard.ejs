@@ -1,13 +1,59 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Dashboard</title>
-    </head>
-    <body>
-        <h2>Welcome to Dashboard</h2>
-        <p><b>Login ID</b> - <%=id %></p>
-        <p><b>email</b> - <%=id %></p>
-        <p><b></b> - <%=id %></p>
-        <p><a href="/logout">Logout</a></p>
-    </body>
+
+<head>
+  <title>Dashboard</title>
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+  <h1>Welcome to Dashboard</h1>
+  <hr />
+
+  <a class="btn btn-primary" href="dashboard" role="button">Personal Details</a>
+  <% if(data[0].type=="doctor") { %>
+    <a class="btn btn-primary" href="professional_details" role="button">Professional Details</a>
+    <a class="btn btn-primary" href="patient_details" role="button">Patient Details</a>
+  <% } %>
+  <a class="btn btn-primary" href="medical_details" role="button">Medical History</a>
+
+  <table>
+    <tr>
+      <td>Name: </td>
+      <td>
+        <p><%=data[0].fname%> <%=data[0].lname%></p>
+      </td>
+    </tr>
+    <tr>
+      <td>Phno: </td>
+      <td><%=data[0].phno%></td>
+    </tr>
+    <tr>
+      <td>Email: </td>
+      <td><%=data[0].email%></td>
+    </tr>
+    <tr>
+      <td>Date of Birth: </td>
+      <td><%=data[0].dob%></td>
+    </tr>
+    <tr>
+      <td>Gender: </td>
+      <td><%=data[0].gender%></td>
+    </tr>
+    <tr>
+      <td>Address: </td>
+      <td>
+        <p><%=data[0].stno%>, <%=data[0].stname%>, <%=data[0].city%>, <%=data[0].state%>: <%=data[0].zipcode%></p>
+      </td>
+    </tr>
+  </table>
+  <hr>
+
+  <a class="btn btn-primary" href="/logout" role="button">Logout</a>
+
+</body>
+
 </html>

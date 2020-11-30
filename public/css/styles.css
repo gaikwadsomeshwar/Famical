@@ -224,33 +224,13 @@ input[type=checkbox] {
 footer {
   text-align: center;
   background-color: #333;
-  padding: 50px;
-}
-
-.footer-nav {
-  text-align: center;
-}
-
-.footer-nav li {
-  display: inline-block;
-  padding-right: 20px;
-}
-
-.footer-nav li:last-child {
-  margin-right: 0;
-}
-
-.footer-nav li a:link,
-.footer-nav li a:visited {
-  text-decoration: none;
-  border: 0;
-  color: #888;
+  padding: 10px 20px 20px 20px;
 }
 
 footer p {
   color: #888;
   font-size: 90%;
-  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .who {
