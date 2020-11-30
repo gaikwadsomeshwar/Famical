@@ -77,6 +77,15 @@
 
             <form method="post" action="register_doctor">
 
+              <!-- alert message -->
+              <div class="form-row">
+
+                <div class="form-group col-md-6">
+                  <label><span style="color: red;"><p> <%=(typeof alertMsg!='undefined')? alertMsg:''%></p></span> </label>
+                </div>
+
+              </div> <!-- form-row.// -->
+
               <!-- User Details -->
               <div class="form-row">
 
@@ -184,7 +193,7 @@
 
                 <div class="form-group col-md-6">
                   <label>Age</label>
-                  <input name="age" class="form-control">
+                  <input name="age" class="form-control" readonly>
                 </div><!-- form-group end.// -->
 
               </div>
@@ -329,7 +338,7 @@
               <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>
             </form>
           </article> <!-- card-body end .// -->
-          <div class="border-top card-body text-center">Have an account? <a href="sl1index.html#form">Log In</a></div>
+          <div class="border-top card-body text-center">Have an account? <a href="login#form">Log In</a></div>
         </div> <!-- card.// -->
       </div> <!-- col.//-->
 
