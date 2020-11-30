@@ -84,7 +84,7 @@ h2:after {
 /*HEADER*/
 /*-----------------------------*/
 header {
-  background-image: url(hero2.jpg);
+  background-image: url(/public/images/hero2.jpg);
   background-size: cover;
   background-position: center;
   height: 100vh;

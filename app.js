@@ -3,6 +3,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 var session = require('express-session')
 const path = require("path");
+var morgan = require('morgan');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+
 // routes
 var loginRouter = require('./routes/login');
 var patientRegistrationRouter = require('./routes/patient_registration');
@@ -14,6 +18,14 @@ const publicdir = path.join(__dirname, './public');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
+
+app.use(session({
+  secret: '123456cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}));
 
 //static files
 app.use(express.static("public"));

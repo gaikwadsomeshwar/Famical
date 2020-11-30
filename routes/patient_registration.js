@@ -37,35 +37,46 @@ router.post('/register_patient', function(req, res, next) {
   }
 
   else {
-    // check unique email address
-    var emailCheck = 'SELECT * FROM personal_details WHERE email =?';
-    db.query(emailCheck, [personal_details.email], function(err, data, fields) {
+    // check unique user
+    var userCheck = 'SELECT * FROM users WHERE userid =?';
+    db.query(userCheck, [user_details.userid], function(err, data, fields) {
       if (err) throw err
       if (data.length > 1) {
-        var msg = personal_details.email + " already exists";
+        var msg = user_details.userid + " already exists";
       }
 
       else {
-        // check phone number
-        var phnoCheck = 'SELECT * FROM personal_details WHERE phno =?';
-        db.query(phnoCheck, [personal_details.phno], function(err, data, fields) {
+        // check unique email address
+        var emailCheck = 'SELECT * FROM personal_details WHERE email =?';
+        db.query(emailCheck, [personal_details.email], function(err, data, fields) {
           if (err) throw err
           if (data.length > 1) {
-            var msg = personal_details.phno + " already exists";
+            var msg = personal_details.email + " already exists";
           }
 
           else {
-            // save users login data into database
-            var sql1 = 'INSERT INTO users SET ?';
-            db.query(sql1, user_details, function(err, data) {
-              if (err) throw err;
+            // check phone number
+            var phnoCheck = 'SELECT * FROM personal_details WHERE phno =?';
+            db.query(phnoCheck, [personal_details.phno], function(err, data, fields) {
+              if (err) throw err
+              if (data.length > 1) {
+                var msg = personal_details.phno + " already exists";
+              }
 
-              // save users personal data into database
-              var sql2 = 'INSERT INTO personal_details SET ?';
-              db.query(sql2, personal_details, function(err, data) {
-                if (err) throw err;
-                var msg = "You are successfully registered";
-              });
+              else {
+                // save users login data into database
+                var sql1 = 'INSERT INTO users SET ?';
+                db.query(sql1, user_details, function(err, data) {
+                  if (err) throw err;
+
+                  // save users personal data into database
+                  var sql2 = 'INSERT INTO personal_details SET ?';
+                  db.query(sql2, personal_details, function(err, data) {
+                    if (err) throw err;
+                    var msg = "Your are successfully registered";
+                  });
+                });
+              }
             });
           }
         });

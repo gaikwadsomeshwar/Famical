@@ -2,238 +2,307 @@
 <html>
 
 <head>
-	<title></title>
+  <title></title>
 
-	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+  <!-- bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+  <!--  jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  <!-- Bootstrap Date-Picker Plugin -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+  <!-- custom script -->
+  <script>
+    $(document).ready(function() {
+      var date_input = $('input[name="dob"]'); //our date input has the name "date"
+      var container = "body";
+      var age = "";
+      var options = {
+        format: 'yyyy/mm/dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+        onSelect: function(value, ui) {
+          var today = new Date();
+          age = today.getFullYear() - ui.selectedYear;
+          $('input[name="age"]') = age;
+        }
+      }
+      date_input.datepicker(options);
+    })
+  </script>
+
+  </script>
 
 </head>
 
 <body>
 
-	<h1 class="hii">Please fill the following information!</h1>
+  <h1 class="hii">Please fill the following information!</h1>
 
-	<style>
-		.hii {
-			font-size: 240%;
-			font-weight: 100;
-			text-transform: uppercase;
-			text-align: center;
-			margin-top: 0;
-			margin-bottom: 20px;
-			color: #000000;
-			font-weight: 200;
-			word-spacing: 4px;
-			letter-spacing: 1px;
-		}
-	</style>
+  <style>
+    .hii {
+      font-size: 240%;
+      font-weight: 100;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #000000;
+      font-weight: 200;
+      word-spacing: 4px;
+      letter-spacing: 1px;
+    }
+  </style>
 
-	<div class="">
+  <div class="">
 
-		<hr>
+    <hr>
 
-		<div class="row justify-content-center">
-			<div class="col-md-6">
-				<div class="card">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
 
-					<header class="card-header">
-						<a href="login#form" class="float-right btn btn-out mt-1">LogIn</a>
-						<a href="login" class="float-right btn btn-outline mt-1">Home</a>
-						<h4 class="card-title mt-2">Sign up</h4>
-					</header>
+          <header class="card-header">
+            <a href="login#form" class="float-right btn btn-out mt-1">LogIn</a>
+            <a href="login" class="float-right btn btn-outline mt-1">Home</a>
+            <h4 class="card-title mt-2">Sign up</h4>
+          </header>
 
-					<article class="card-body">
+          <article class="card-body">
 
-						<form method="post" action="register_patient">
+            <form method="post" action="register_patient">
 
-							<!-- USER ID CREATED BY THE PATIENT-->
-							<div class="form-group">
+              <!-- alert message -->
+              <div class="form-row">
 
-								<label>UserID</label>
-								<input class="form-control" name="userid" type="text">
+                <div class="form-group col-md-6">
+                  <label><span style="color: red;"><p> <%=(typeof alertMsg!='undefined')? alertMsg:''%></p></span> </label>
+                </div>
 
-							</div>
+              </div> <!-- form-row.// -->
 
-							<!-- PASSWORD-->
-							<div class="form-row">
+              <!-- User Details -->
+              <div class="form-row">
 
-								<!-- PASSWORD CREATED-->
-								<div class="form-group col-md-6">
-									<label>Create Password</label>
-									<input type="password" name="password" class="form-control">
-								</div> <!-- form-group end.// -->
+                <div class="form-group col-md-6">
+                  <label><span style="font-weight: bold;"> Create User Details</span> </label>
+                </div>
 
-								<!-- PASSWORD CONFIRMED-->
-								<div class="form-group col-md-6">
-									<label>Confirm Password</label>
-									<input type="password" name="confirm_password" class="form-control">
-								</div><!-- form-group end.// -->
+              </div> <!-- form-row.// -->
 
-							</div> <!-- form-row.// -->
+              <!-- USER ID-->
+              <div class="form-group">
 
-							<!-- FIRST NAME-->
-							<div class="form-row">
+                <label>UserID</label>
+                <input class="form-control" name="userid" type="text" required>
 
-								<div class="col form-group col-md-6">
-									<label>First name </label>
-									<input type="text" name="fname" class="form-control" placeholder="">
-								</div> <!-- form-group end.// -->
+              </div>
 
-								<!-- LAST NAME-->
-								<div class="col form-group col-md-6">
-									<label>Last name</label>
-									<input type="text" name="lname" class="form-control" placeholder=" ">
-								</div> <!-- form-group end.// -->
-							</div> <!-- form-row end.// -->
+              <!-- PASSWORD-->
+              <div class="form-row">
 
-							<!-- PHONE NUMBER-->
-							<div class="form-row">
+                <!-- PASSWORD CREATED-->
+                <div class="form-group col-md-6">
+                  <label>Create Password</label>
+                  <input type="password" name="password" class="form-control" required>
+                </div> <!-- form-group end.// -->
 
-								<div class="form-group col-md-6">
-									<label>Phone Number</label>
-									<input type="number" name="phno" class="form-control">
-								</div> <!-- form-group end.// -->
+                <!-- PASSWORD CONFIRMED-->
+                <div class="form-group col-md-6">
+                  <label>Confirm Password</label>
+                  <input type="password" name="confirm_password" class="form-control" required>
+                </div><!-- form-group end.// -->
 
-								<!-- EMAIL-->
+              </div> <!-- form-row.// -->
 
-								<div class="form-group col-md-6">
+              <!-- Personal Details -->
+              <div class="form-row">
 
-									<label>Email address</label>
-									<input type="email" name="email" class="form-control" placeholder="">
+                <div class="form-group col-md-6">
+                  <label><span style="font-weight: bold;"> Personal Details</span> </label>
+                </div>
 
-									<small class="form-text text-muted">We'll never share your email with anyone else.</small>
-								</div> <!-- form-group end.// -->
-							</div> <!-- form-row.// -->
+              </div> <!-- form-row.// -->
 
-							<!-- GENDER/SEX-->
-							<div class="form-group">
+              <!-- FIRST NAME-->
+              <div class="form-row">
 
-								<label class="form-check form-check-inline">
-									Gender:
-									<input class="form-check-input" type="radio" name="gender" value="Male">
-									<span class="form-check-label"> Male</span>
-								</label>
+                <div class="col form-group col-md-6">
+                  <label>First name </label>
+                  <input type="text" name="fname" class="form-control" required>
+                </div> <!-- form-group end.// -->
 
-								<label class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" value="Female">
-									<span class="form-check-label"> Female</span>
-								</label>
+                <!-- LAST NAME-->
+                <div class="col form-group col-md-6">
+                  <label>Last name</label>
+                  <input type="text" name="lname" class="form-control" required>
+                </div> <!-- form-group end.// -->
+              </div> <!-- form-row end.// -->
 
-								<label class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="gender" value="Other">
-									<span class="form-check-label"> Other</span>
-								</label>
-							</div> <!-- form-group end.// -->
+              <!-- PHONE NUMBER-->
+              <div class="form-row">
 
-							<!-- DATE OF BIRTH and AGE-->
-							<div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>Phone Number</label>
+                  <input type="text" name="phno" class="form-control" required>
+                </div> <!-- form-group end.// -->
 
-								<div class="form-group col-md-6">
-									<label>Date of Birth</label>
-									<input type="text" name="dob" class="form-control">
-								</div><!-- form-group end.// -->
+                <!-- EMAIL-->
 
-								<div class="form-group col-md-6">
-									<label>Age</label>
-									<input name="age" class="form-control">
-								</div><!-- form-group end.// -->
+                <div class="form-group col-md-6">
 
-							</div>
+                  <label>Email address</label>
+                  <input type="email" name="email" class="form-control" required>
 
-							<!-- CITY (PATIENT)-->
-							<div class="form-row">
+                  <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div> <!-- form-group end.// -->
+              </div> <!-- form-row.// -->
 
-								<!-- STREET NAME (PATIENT)-->
-								<div class="form-group col-md-2">
-									<label>St. No.</label>
-									<input type="text" name="stno" class="form-control">
-								</div><!-- form-group end.// -->
+              <!-- GENDER/SEX-->
+              <div class="form-group">
 
-								<!-- STREET NAME (PATIENT)-->
-								<div class="form-group col-md-4">
-									<label>St. Name</label>
-									<input type="text" name="stname" class="form-control">
-								</div><!-- form-group end.// -->
+                <label class="form-check form-check-inline">
+                  Gender:
+                  <input class="form-check-input" type="radio" name="gender" value="Male">
+                  <span class="form-check-label"> Male</span>
+                </label>
 
-								<div class="form-group col-md-6">
-									<label>City</label>
-									<input type="text" name="city" class="form-control">
-								</div> <!-- form-group end.// -->
+                <label class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" value="Female">
+                  <span class="form-check-label"> Female</span>
+                </label>
 
-							</div> <!-- form-row.// -->
+                <label class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" value="Other">
+                  <span class="form-check-label"> Other</span>
+                </label>
+              </div> <!-- form-group end.// -->
 
-							<div class="form-row">
+              <!-- DATE OF BIRTH and AGE-->
+              <div class="form-row">
 
-								<!-- STATE(STAETE)-->
-								<div class="form-group col-md-6">
-									<label>State</label>
-									<select name="state" class="form-control">
-										<option selected=""> Choose...</option>
+                <div class="form-group col-md-6">
+                  <label>Date of Birth</label>
+                  <input class="form-control" name="dob" placeholder="YYYY-MM-DD" type="text" />
+                </div><!-- form-group end.// -->
 
-										<option>Andhra Pradesh</option>
-										<option>Arunachal Pradesh</option>
-										<option>Andaman and Nicobar Islands</option>
-										<option>Assam</option>
-										<option>Bihar</option>
-										<option>Chandigarh</option>
-										<option>Chhattisgarh</option>
-										<option>Dadra and Nagar Haveli andDaman & Diu</option>
-										<option>Delhi</option>
-										<option>Goa</option>
-										<option>Gujarat</option>
-										<option>Haryana</option>
-										<option>Himachal Pradesh</option>
-										<option>Jammu & Kashmir</option>
-										<option>Jharkhand</option>
-										<option>Karnataka</option>
-										<option>Kerala</option>
-										<option>Ladakh</option>
-										<option>Lakshadweep</option>
-										<option>Madhya Pradesh</option>
-										<option value="Maharashtra">Maharashtra</option>
-										<option>Manipur</option>
-										<option>Meghalaya</option>
-										<option>Mizoram</option>
-										<option>Nagaland</option>
-										<option>Odisha</option>
-										<option>Puducherry</option>
-										<option>Punjab</option>
-										<option>Rajasthan</option>
-										<option>Sikkim</option>
-										<option>Tamil Nadu</option>
-										<option>Telangana</option>
-										<option>Tripura</option>
-										<option>Uttarakhand</option>
-										<option>Uttar Pradesh</option>
-										<option>West Bengal</option>
+                <div class="form-group col-md-6">
+                  <label>Age</label>
+                  <input name="age" class="form-control" readonly>
+                </div><!-- form-group end.// -->
 
-									</select>
-								</div> <!-- form-group end.// -->
+              </div>
 
-								<!-- PIN CODE-->
-								<div class="form-group col-md-6">
-									<label>Pin Code</label>
-									<input type="text" name="zipcode" class="form-control">
-								</div> <!-- form-group end.// -->
+              <!-- Address details -->
+              <div class="form-row">
 
-							</div> <!-- form-row.// -->
+                <div class="form-group col-md-6">
+                  <label><span style="font-weight: bold;"> Address Details</span> </label>
+                </div>
 
-							<div class="form-group">
-								<button type="submit" class="btn btn-primary btn-block"> Register </button>
-							</div> <!-- form-group// -->
+              </div> <!-- form-row.// -->
 
-							<small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>
-						</form>
-					</article> <!-- card-body end .// -->
-					<div class="border-top card-body text-center">Have an account? <a href="sl1index.html#form">Log In</a></div>
-				</div> <!-- card.// -->
-			</div> <!-- col.//-->
+              <!-- CITY (PATIENT)-->
+              <div class="form-row">
 
-		</div> <!-- row.//-->
-	</div>
-	<!--container end.//-->
+                <!-- STREET NO-->
+                <div class="form-group col-md-2">
+                  <label>St. No.</label>
+                  <input type="text" name="stno" class="form-control">
+                </div><!-- form-group end.// -->
 
-	<br><br>
+                <!-- STREET NAME -->
+                <div class="form-group col-md-4">
+                  <label>St. Name</label>
+                  <input type="text" name="stname" class="form-control">
+                </div><!-- form-group end.// -->
+
+                <div class="form-group col-md-6">
+                  <label>City</label>
+                  <input type="text" name="city" class="form-control" required>
+                </div> <!-- form-group end.// -->
+
+              </div> <!-- form-row.// -->
+
+              <div class="form-row">
+
+                <!-- STATE(STAETE)-->
+                <div class="form-group col-md-6">
+                  <label>State</label>
+                  <select name="state" class="form-control">
+                    <option selected=""> Choose...</option>
+
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Chhattisgarh">Chhattisgarh</option>
+                    <option value="Dadra and Nagar Haveli andDaman & Diu">Dadra and Nagar Haveli andDaman & Diu</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Jammu & Kashmir">Jammu & Kashmir</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Ladakh">Ladakh</option>
+                    <option value="Lakshadweep">Lakshadweep</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Odisha">Odisha</option>
+                    <option value="Puducherry">Puducherry</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="West Bengal">West Bengal</option>
+
+                  </select>
+                </div> <!-- form-group end.// -->
+
+                <!-- PIN CODE-->
+                <div class="form-group col-md-6">
+                  <label>Pin Code</label>
+                  <input type="text" name="zipcode" class="form-control" required>
+                </div> <!-- form-group end.// -->
+
+              </div> <!-- form-row.// -->
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Sign Up </button>
+              </div> <!-- form-group// -->
+
+              <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>
+            </form>
+          </article> <!-- card-body end .// -->
+          <div class="border-top card-body text-center">Have an account? <a href="login#form">Log In</a></div>
+        </div> <!-- card.// -->
+      </div> <!-- col.//-->
+
+    </div> <!-- row.//-->
+  </div>
+  <!--container end.//-->
+
+  <br><br>
 
 </body>
 

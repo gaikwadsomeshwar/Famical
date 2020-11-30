@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/gaikwadsomeshwar/Famical#readme",
   "dependencies": {
+    "alert": "^5.0.6",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -28,6 +29,7 @@
     "express-session": "^1.17.1",
     "jsonfile": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1"
   }
 }
