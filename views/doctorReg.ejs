@@ -46,7 +46,16 @@
 
             <form method="post" action="register_doctor">
 
-              <!-- USER ID CREATED BY THE PATIENT-->
+              <!-- User Details -->
+              <div class="form-row">
+
+                <div class="form-group col-md-6">
+                  <label><span style="font-weight: bold;"> Create User Details</span> </label>
+                </div>
+
+              </div> <!-- form-row.// -->
+
+              <!-- USER ID-->
               <div class="form-group">
 
                 <label>UserID</label>
@@ -71,6 +80,15 @@
 
               </div> <!-- form-row.// -->
 
+              <!-- Personal Details -->
+              <div class="form-row">
+
+                <div class="form-group col-md-6">
+                  <label><span style="font-weight: bold;"> Personal Details</span> </label>
+                </div>
+
+              </div> <!-- form-row.// -->
+
               <!-- FIRST NAME-->
               <div class="form-row">
 
@@ -91,7 +109,7 @@
 
                 <div class="form-group col-md-6">
                   <label>Phone Number</label>
-                  <input type="number" name="phno" class="form-control">
+                  <input type="text" name="phno" class="form-control">
                 </div> <!-- form-group end.// -->
 
                 <!-- EMAIL-->
@@ -140,16 +158,25 @@
 
               </div>
 
+              <!-- Address details -->
+              <div class="form-row">
+
+                <div class="form-group col-md-6">
+                  <label><span style="font-weight: bold;"> Address Details</span> </label>
+                </div>
+
+              </div> <!-- form-row.// -->
+
               <!-- CITY (PATIENT)-->
               <div class="form-row">
 
-                <!-- STREET NAME (PATIENT)-->
+                <!-- STREET NO-->
                 <div class="form-group col-md-2">
                   <label>St. No.</label>
                   <input type="text" name="stno" class="form-control">
                 </div><!-- form-group end.// -->
 
-                <!-- STREET NAME (PATIENT)-->
+                <!-- STREET NAME -->
                 <div class="form-group col-md-4">
                   <label>St. Name</label>
                   <input type="text" name="stname" class="form-control">
@@ -218,37 +245,50 @@
 
               </div> <!-- form-row.// -->
 
-              <!-- Qalification -->
-              <div class="form-group">
-
-                <label>Qualification</label>
-                <input class="form-control" id="qualification" name="qualification" type="text">
-
-              </div>
-
-              <!-- Hospital details -->
+              <!-- Professional details -->
               <div class="form-row">
 
                 <div class="form-group col-md-6">
-                  <label><span style="font-weight: bold;"> Hospital Details</span> </label>
+                  <label><span style="font-weight: bold;"> Professional Details</span> </label>
                 </div>
 
               </div> <!-- form-row.// -->
 
-              <!-- Hospital name-->
-              <div class="form-group">
+              <div class="form-row">
+                <!-- Doctor Id -->
+                <div class="form-group col-md-6">
 
-                <label>Name of Hospital</label>
-                <input class="form-control" id="hname" name="hname" type="text">
+                  <label>License No</label>
+                  <input class="form-control" name="docid" type="text">
 
+                </div>
+
+                <!-- Qalification -->
+                <div class="form-group col-md-6">
+
+                  <label>Qualification</label>
+                  <input class="form-control" name="qualification" type="text">
+
+                </div>
               </div>
 
-              <!-- Department -->
-              <div class="form-group">
+              <div class="form-row">
 
-                <label>Department you work</label>
-                <input class="form-control" id="dept" name="dept" type="text">
+                <!-- Hospital name-->
+                <div class="form-group col-md-6">
 
+                  <label>Hospital</label>
+                  <input class="form-control" name="hospital" type="text">
+
+                </div>
+
+                <!-- Department -->
+                <div class="form-group col-md-6">
+
+                  <label>Department</label>
+                  <input class="form-control" name="department" type="text">
+
+                </div>
               </div>
 
               <div class="form-group">
