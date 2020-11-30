@@ -4,8 +4,41 @@
 <head>
   <title></title>
 
+  <!-- bootstrap -->
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- fonts -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+  <!--  jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  <!-- Bootstrap Date-Picker Plugin -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+  <!-- custom script -->
+  <script>
+    $(document).ready(function() {
+      var date_input = $('input[name="dob"]'); //our date input has the name "date"
+      var container = "body";
+      var age = "";
+      var options = {
+        format: 'yyyy/mm/dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+        onSelect: function(value, ui) {
+          var today = new Date();
+          age = today.getFullYear() - ui.selectedYear;
+          $('input[name="age"]') = age;
+        }
+      }
+      date_input.datepicker(options);
+    })
+  </script>
+
+  </script>
 
 </head>
 
@@ -59,7 +92,7 @@
               <div class="form-group">
 
                 <label>UserID</label>
-                <input class="form-control" name="userid" type="text">
+                <input class="form-control" name="userid" type="text" required>
 
               </div>
 
@@ -69,13 +102,13 @@
                 <!-- PASSWORD CREATED-->
                 <div class="form-group col-md-6">
                   <label>Create Password</label>
-                  <input type="password" name="password" class="form-control">
+                  <input type="password" name="password" class="form-control" required>
                 </div> <!-- form-group end.// -->
 
                 <!-- PASSWORD CONFIRMED-->
                 <div class="form-group col-md-6">
                   <label>Confirm Password</label>
-                  <input type="password" name="confirm_password" class="form-control">
+                  <input type="password" name="confirm_password" class="form-control" required>
                 </div><!-- form-group end.// -->
 
               </div> <!-- form-row.// -->
@@ -94,13 +127,13 @@
 
                 <div class="col form-group col-md-6">
                   <label>First name </label>
-                  <input type="text" name="fname" class="form-control" placeholder="">
+                  <input type="text" name="fname" class="form-control" required>
                 </div> <!-- form-group end.// -->
 
                 <!-- LAST NAME-->
                 <div class="col form-group col-md-6">
                   <label>Last name</label>
-                  <input type="text" name="lname" class="form-control" placeholder=" ">
+                  <input type="text" name="lname" class="form-control" required>
                 </div> <!-- form-group end.// -->
               </div> <!-- form-row end.// -->
 
@@ -109,7 +142,7 @@
 
                 <div class="form-group col-md-6">
                   <label>Phone Number</label>
-                  <input type="text" name="phno" class="form-control">
+                  <input type="text" name="phno" class="form-control" required>
                 </div> <!-- form-group end.// -->
 
                 <!-- EMAIL-->
@@ -117,7 +150,7 @@
                 <div class="form-group col-md-6">
 
                   <label>Email address</label>
-                  <input type="email" name="email" class="form-control" placeholder="">
+                  <input type="email" name="email" class="form-control" required>
 
                   <small class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div> <!-- form-group end.// -->
@@ -148,12 +181,12 @@
 
                 <div class="form-group col-md-6">
                   <label>Date of Birth</label>
-                  <input type="text" name="dob" class="form-control">
+                  <input class="form-control" name="dob" placeholder="YYYY-MM-DD" type="text" />
                 </div><!-- form-group end.// -->
 
                 <div class="form-group col-md-6">
                   <label>Age</label>
-                  <input name="age" class="form-control">
+                  <input name="age" class="form-control" readonly>
                 </div><!-- form-group end.// -->
 
               </div>
@@ -184,7 +217,7 @@
 
                 <div class="form-group col-md-6">
                   <label>City</label>
-                  <input type="text" name="city" class="form-control">
+                  <input type="text" name="city" class="form-control" required>
                 </div> <!-- form-group end.// -->
 
               </div> <!-- form-row.// -->
@@ -240,7 +273,7 @@
                 <!-- PIN CODE-->
                 <div class="form-group col-md-6">
                   <label>Pin Code</label>
-                  <input type="text" name="zipcode" class="form-control">
+                  <input type="text" name="zipcode" class="form-control" required>
                 </div> <!-- form-group end.// -->
 
               </div> <!-- form-row.// -->

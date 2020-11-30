@@ -28,7 +28,15 @@ router.post('/register_doctor', function(req, res, next) {
   user_details = {
     userid: req.body.userid,
     password: req.body.password,
-    type: "patient"
+    type: "doctor"
+  }
+
+  professional_details = {
+    userid: req.body.userid,
+    docid: req.body.docid,
+    qualification: req.body.qualification,
+    hospital: req.body.hospital,
+    department: req.body.department
   }
 
   // check password
@@ -37,35 +45,62 @@ router.post('/register_doctor', function(req, res, next) {
   }
 
   else {
-    // check unique email address
-    var emailCheck = 'SELECT * FROM personal_details WHERE email =?';
-    db.query(emailCheck, [personal_details.email], function(err, data, fields) {
+    // check unique user
+    var userCheck = 'SELECT * FROM users WHERE userid =?';
+    db.query(userCheck, [user_details.userid], function(err, data, fields) {
       if (err) throw err
       if (data.length > 1) {
-        var msg = personal_details.email + " already exists";
+        var msg = user_details.userid + " already exists";
       }
 
       else {
-        // check phone number
-        var phnoCheck = 'SELECT * FROM personal_details WHERE phno =?';
-        db.query(phnoCheck, [personal_details.phno], function(err, data, fields) {
+        // check unique email address
+        var emailCheck = 'SELECT * FROM personal_details WHERE email =?';
+        db.query(emailCheck, [personal_details.email], function(err, data, fields) {
           if (err) throw err
           if (data.length > 1) {
-            var msg = personal_details.phno + " already exists";
+            var msg = personal_details.email + " already exists";
           }
 
           else {
-            // save users login data into database
-            var sql1 = 'INSERT INTO users SET ?';
-            db.query(sql1, user_details, function(err, data) {
-              if (err) throw err;
+            // check phone number
+            var phnoCheck = 'SELECT * FROM personal_details WHERE phno =?';
+            db.query(phnoCheck, [personal_details.phno], function(err, data, fields) {
+              if (err) throw err
+              if (data.length > 1) {
+                var msg = personal_details.phno + " already exists";
+              }
 
-              // save users personal data into database
-              var sql2 = 'INSERT INTO personal_details SET ?';
-              db.query(sql2, personal_details, function(err, data) {
-                if (err) throw err;
-                var msg = "Your are successfully registered";
-              });
+              else {
+                // check doc id
+                var docidCheck = 'SELECT * FROM doctor WHERE docid =?';
+                db.query(docidCheck, [professional_details.docid], function(err, data, fields) {
+                  if (err) throw err
+                  if (data.length > 1) {
+                    var msg = professional_details.docid + " already exists";
+                  }
+                  else {
+                    // save users login data into database
+                    var sql1 = 'INSERT INTO users SET ?';
+                    db.query(sql1, user_details, function(err, data) {
+                      if (err) throw err;
+
+                      // save users personal data into database
+                      var sql2 = 'INSERT INTO personal_details SET ?';
+                      db.query(sql2, personal_details, function(err, data) {
+                        if (err) throw err;
+
+                        // save professional details into database
+                        var sql3 = 'INSERT INTO doctor SET ?';
+                        db.query(sql3, professional_details, function(err, data) {
+                          if (err) throw err;
+                          var msg = "Your are successfully registered";
+                        });
+                      });
+                    });
+                  }
+                });
+              }
             });
           }
         });
