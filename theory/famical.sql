@@ -83,6 +83,7 @@ DROP TABLE IF EXISTS `family`;
 CREATE TABLE `family` (
   `userid` varchar(25) NOT NULL,
   `memberid` varchar(25) NOT NULL,
+  `type` varchar(15) DEFAULT NULL,
   KEY `userid` (`userid`),
   KEY `memberid` (`memberid`),
   CONSTRAINT `family_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `patient` (`userid`),
@@ -145,6 +146,7 @@ CREATE TABLE `personal_details` (
   `city` varchar(30) DEFAULT NULL,
   `state` varchar(50) DEFAULT NULL,
   `zipcode` int NOT NULL,
+  `gender` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`userid`),
   UNIQUE KEY `phno` (`phno`),
   UNIQUE KEY `email` (`email`),
@@ -171,6 +173,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `userid` varchar(25) NOT NULL,
   `password` varchar(20) NOT NULL,
+  `type` varchar(10) NOT NULL,
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -193,4 +196,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-29 13:04:58
+-- Dump completed on 2020-11-30  9:08:40

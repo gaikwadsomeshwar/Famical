@@ -1,6 +1,13 @@
+// modules
 const express = require("express");
 const bodyParser = require("body-parser");
-const path = require("path");
+var session = require('express-session')
+
+// routes
+var loginRouter = require('./routes/login');
+var patientRegistrationRouter = require('./routes/patient_registration');
+var doctorRegistrationRouter = require('./routes/doctor_registration');
+
 const app = express();
 var router = express.Router();
 const publicdir = path.join(__dirname, './public');
@@ -8,7 +15,13 @@ const publicdir = path.join(__dirname, './public');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(express.static(publicdir));
+//static files
+app.use(express.static("public"));
+
+//using routes
+app.use('/', loginRouter);
+app.use('/',patientRegistrationRouter)
+app.use('/',doctorRegistrationRouter)
 
 // To serve cross-domain requests
 app.use(function(req, res, next) {
