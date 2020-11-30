@@ -1,10 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../database');
+var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
+
+var msg = "";
 
 // to display registration form
 router.get('/register_doctor', function(req, res, next) {
-  res.render('doctorReg');
+  res.render('doctorReg', {alertMsg: msg} );
+ // msg = "";
 });
 
 // to store user input detail on post request
@@ -28,12 +33,12 @@ router.post('/register_doctor', function(req, res, next) {
   user_details = {
     userid: req.body.userid,
     password: req.body.password,
-    type: "patient"
+    type: "doctor"
   }
 
   // check password
   if (user_details.password != req.body.confirm_password) {
-    var msg = "Password & Confirm Password is not Matched";
+    msg = "Password & Confirm Password is not Matched";
   }
 
   else {
@@ -41,8 +46,8 @@ router.post('/register_doctor', function(req, res, next) {
     var emailCheck = 'SELECT * FROM personal_details WHERE email =?';
     db.query(emailCheck, [personal_details.email], function(err, data, fields) {
       if (err) throw err
-      if (data.length > 1) {
-        var msg = personal_details.email + " already exists";
+      if (data.length > 0) {
+        msg = personal_details.email + " already exists";
       }
 
       else {
@@ -51,7 +56,7 @@ router.post('/register_doctor', function(req, res, next) {
         db.query(phnoCheck, [personal_details.phno], function(err, data, fields) {
           if (err) throw err
           if (data.length > 1) {
-            var msg = personal_details.phno + " already exists";
+            msg = personal_details.phno + " already exists";
           }
 
           else {
@@ -64,7 +69,7 @@ router.post('/register_doctor', function(req, res, next) {
               var sql2 = 'INSERT INTO personal_details SET ?';
               db.query(sql2, personal_details, function(err, data) {
                 if (err) throw err;
-                var msg = "Your are successfully registered";
+                msg = "You are successfully registered";
               });
             });
           }
@@ -72,10 +77,7 @@ router.post('/register_doctor', function(req, res, next) {
       }
     });
   }
-
-  res.render('doctorReg', {
-    alertMsg: msg
-  });
+  res.redirect('/register_doctor');
 });
 
 module.exports = router;

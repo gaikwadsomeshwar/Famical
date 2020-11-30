@@ -44,9 +44,9 @@
 
           <article class="card-body">
 
-            <form method="post" action="register_doctor">
+            <form method="post" action="/register_doctor">
 
-              <!-- USER ID CREATED BY THE PATIENT-->
+              <!-- USER ID CREATED BY THE DOCTOR -->
               <div class="form-group">
 
                 <label>UserID</label>
@@ -257,6 +257,12 @@
 
               <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>
             </form>
+
+            <% if(alertMsg) { %>
+            <h4><%=alertMsg%></h4>
+            <% } %>
+    
+
           </article> <!-- card-body end .// -->
           <div class="border-top card-body text-center">Have an account? <a href="sl1index.html#form">Log In</a></div>
         </div> <!-- card.// -->

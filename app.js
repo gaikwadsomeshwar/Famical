@@ -7,7 +7,7 @@ const path = require("path");
 var loginRouter = require('./routes/login');
 var patientRegistrationRouter = require('./routes/patient_registration');
 var doctorRegistrationRouter = require('./routes/doctor_registration');
-
+var index = require('./routes/login');
 const app = express();
 var router = express.Router();
 const publicdir = path.join(__dirname, './public');
@@ -20,8 +20,10 @@ app.use(express.static("public"));
 
 //using routes
 app.use('/', loginRouter);
-app.use('/',patientRegistrationRouter)
-app.use('/',doctorRegistrationRouter)
+app.use('/',patientRegistrationRouter);
+app.use('/',doctorRegistrationRouter);
+app.use('/',index);
+
 
 // To serve cross-domain requests
 app.use(function(req, res, next) {
@@ -32,21 +34,8 @@ app.use(function(req, res, next) {
 
 app.set('view engine', 'ejs');
 
-app.get("/index", function(req,res){
-  res.render("index");
-});
 
-app.get("/doctorReg", function(req,res){
-  res.render("doctorReg");
-});
 
-app.get("/patientReg", function(req,res){
-  res.render("patientReg");
-});
-
-app.get("/user-list", function(req,res){
-  res.render("user-list");
-});
 
 
 app.listen(3000, function() {
