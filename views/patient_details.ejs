@@ -10,13 +10,13 @@
 
 <body>
 
-  <h1>Medical History</h1>
+  <h1>My Patients</h1>
   <hr />
 
   <a class="btn btn-primary" href="dashboard" role="button">Personal Details</a>
   <% if(data1[0].type=="doctor") { %>
-    <a class="btn btn-primary" href="professional_details" role="button">Professional Details</a>
-    <a class="btn btn-primary" href="patient_details" role="button">Patient Details</a>
+  <a class="btn btn-primary" href="professional_details" role="button">Professional Details</a>
+  <a class="btn btn-primary" href="patient_details" role="button">Patient Details</a>
   <% } %>
   <a class="btn btn-primary" href="medical_details" role="button">Medical History</a>
 
@@ -28,17 +28,22 @@
       <td>Medical Test(s)</td>
       <td>Diagnosis</td>
     </tr>
+    <%
+      if(data3.length>0) {
+        data3.forEach(function(data) {
+    %>
     <tr>
-      <% if(data3.length>0) { %>
-        <% for(var i=0; i<data2.length; i++) { %>
-        <td><%= data3[i].cdate %></td>
-        <td><%= data3[i].pid %></td>
-        <td><%= data3[i].prescriptions %></td>
-        <td><%= data3[i].medtests %></td>
-        <td><%= data3[i].diagnosis %></td>
-        <% } %>
-      <% } %>
+      <td><%= data.cdate %></td>
+      <td><%= data.pid %></td>
+      <td><%= data.prescriptions %></td>
+      <td><%= data.medtests %></td>
+      <td><%= data.diagnosis %></td>
     </tr>
+      <% }) %>
+    <% } else { %>
+    <td>No Data Found</td>
+    <% } %>
+
   </table>
 
   <a class="btn btn-primary" href="/logout" role="button">Logout</a>
