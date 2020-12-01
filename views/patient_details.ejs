@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Dashboard</title>
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+  <h1>Medical History</h1>
+  <hr />
+
+  <a class="btn btn-primary" href="dashboard" role="button">Personal Details</a>
+  <% if(data1[0].type=="doctor") { %>
+    <a class="btn btn-primary" href="professional_details" role="button">Professional Details</a>
+    <a class="btn btn-primary" href="patient_details" role="button">Patient Details</a>
+  <% } %>
+  <a class="btn btn-primary" href="medical_details" role="button">Medical History</a>
+
+  <table border="1">
+    <tr>
+      <td>Consult Date</td>
+      <td>Patient ID</td>
+      <td>Prescriptions</td>
+      <td>Medical Test(s)</td>
+      <td>Diagnosis</td>
+    </tr>
+    <tr>
+      <% if(data3.length>0) { %>
+        <% for(var i=0; i<data2.length; i++) { %>
+        <td><%= data3[i].cdate %></td>
+        <td><%= data3[i].pid %></td>
+        <td><%= data3[i].prescriptions %></td>
+        <td><%= data3[i].medtests %></td>
+        <td><%= data3[i].diagnosis %></td>
+        <% } %>
+      <% } %>
+    </tr>
+  </table>
+
+  <a class="btn btn-primary" href="/logout" role="button">Logout</a>
+
+</body>
+
+</html>

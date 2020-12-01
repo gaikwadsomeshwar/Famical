@@ -19,6 +19,7 @@ var doctorRegistrationRouter = require('./routes/doctor_registration');
 var dashRouter = require('./routes/dashboard');
 var professionalDetailsRouter = require('./routes/professional_details');
 var medicalDetailsRouter = require('./routes/medical_details');
+var patientDetailsRouter = require('./routes/patient_details');
 var logoutRouter = require('./routes/logout');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,6 +43,7 @@ app.use('/',loginRouter);
 app.use('/',dashRouter);
 app.use('/',professionalDetailsRouter);
 app.use('/',medicalDetailsRouter);
+app.use('/',patientDetailsRouter);
 app.use('/',logoutRouter);
 
 // To serve cross-domain requests
