@@ -14,26 +14,28 @@
   <hr />
 
   <a class="btn btn-primary" href="dashboard" role="button">Personal Details</a>
-  <a class="btn btn-primary" href="professional_details" role="button">Professional Details</a>
-  <a class="btn btn-primary" href="patient_details" role="button">Patient Details</a>
+  <% if(data1[0].type=="doctor") { %>
+    <a class="btn btn-primary" href="professional_details" role="button">Professional Details</a>
+    <a class="btn btn-primary" href="patient_details" role="button">Patient Details</a>
+  <% } %>
   <a class="btn btn-primary" href="medical_details" role="button">Medical History</a>
 
   <table>
     <tr>
       <td>License No: </td>
-      <td><%=data[0].docid%> <%=data[0].lname%></td>
+      <td><%=data2[0].docid%></td>
     </tr>
     <tr>
       <td>Qualification: </td>
-      <td><%=data[0].qualification%></td>
+      <td><%=data2[0].qualification%></td>
     </tr>
     <tr>
       <td>Hospital: </td>
-      <td><%=data[0].hospital%></td>
+      <td><%=data2[0].hospital%></td>
     </tr>
     <tr>
       <td>Department: </td>
-      <td><%=data[0].department%></td>
+      <td><%=data2[0].department%></td>
     </tr>
   </table>
   <hr>

@@ -2,6 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 var session = require('express-session')
+const ejs = require("ejs");
 const path = require("path");
 var morgan = require('morgan');
 var session = require('express-session');
@@ -9,6 +10,7 @@ var cookieParser = require('cookie-parser');
 
 const app = express();
 var router = express.Router();
+app.set('view engine', 'ejs');
 
 // routes
 var loginRouter = require('./routes/login');
@@ -48,8 +50,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
-app.set('view engine', 'ejs');
 
 app.listen(3000, function() {
   console.log("Server Started at Port 3000");

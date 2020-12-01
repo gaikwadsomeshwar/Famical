@@ -58,7 +58,7 @@ router.post('/register_doctor', async function(req, res, next) {
     var userCheck = 'SELECT * FROM users WHERE userid =?';
     db.query(userCheck, [user_details.userid], function(err, data, fields) {
       if (err) throw err
-      if (data.length > 1) {
+      if (data.length > 0) {
         var msg = user_details.userid + " already exists";
       }
 
@@ -67,7 +67,7 @@ router.post('/register_doctor', async function(req, res, next) {
         var emailCheck = 'SELECT * FROM personal_details WHERE email =?';
         db.query(emailCheck, [personal_details.email], function(err, data, fields) {
           if (err) throw err
-          if (data.length > 1) {
+          if (data.length > 0) {
             var msg = personal_details.email + " already exists";
           }
 
@@ -76,7 +76,7 @@ router.post('/register_doctor', async function(req, res, next) {
             var phnoCheck = 'SELECT * FROM personal_details WHERE phno =?';
             db.query(phnoCheck, [personal_details.phno], function(err, data, fields) {
               if (err) throw err
-              if (data.length > 1) {
+              if (data.length > 0) {
                 var msg = personal_details.phno + " already exists";
               }
 
@@ -85,7 +85,7 @@ router.post('/register_doctor', async function(req, res, next) {
                 var docidCheck = 'SELECT * FROM doctor WHERE docid =?';
                 db.query(docidCheck, [professional_details.docid], function(err, data, fields) {
                   if (err) throw err
-                  if (data.length > 1) {
+                  if (data.length > 0) {
                     var msg = professional_details.docid + " already exists";
                   }
                   else {
