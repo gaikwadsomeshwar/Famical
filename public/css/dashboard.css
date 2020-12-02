@@ -1,0 +1,20 @@
+.over{
+    overflow: scroll;
+
+}
+
+.myborder{
+    /* border: black solid; */
+    padding: 5%;
+    border-radius: 1%;
+    background-color: whitesmoke;
+    
+}
+
+.corner{
+    border-radius: 1%;
+}
+
+.fix-h{
+    height : 120vh;
+}
