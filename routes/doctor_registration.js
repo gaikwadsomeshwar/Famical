@@ -25,8 +25,7 @@ router.post('/register_doctor', async function(req, res, next) {
     city: req.body.city,
     state: req.body.state,
     zipcode: req.body.zipcode,
-    gender: req.body.gender,
-    type: "doctor"
+    gender: req.body.gender
   }
 
   user_details = {

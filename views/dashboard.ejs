@@ -1,58 +1,244 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome <%=data1[0].fname%></title>
+
+  <!-- css -->
+  <link rel="stylesheet" href="css/dashboard.css">
 
   <!-- bootstrap -->
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
 </head>
 
-<body>
+<body style="overflow-x: hidden;">
 
-  <h1>Welcome to Dashboard</h1>
-  <hr />
+  <main style="background-color: #4E7690;">
+    <div class="container p-0 py-5 ">
+      <div class="row p-2 corner" style="background-color: #89A5B8;">
 
-  <a class="btn btn-primary" href="dashboard" role="button">Personal Details</a>
-  <% if(data[0].type=="doctor") { %>
-    <a class="btn btn-primary" href="professional_details" role="button">Professional Details</a>
-    <a class="btn btn-primary" href="patient_details" role="button">Patient Details</a>
-  <% } %>
-  <a class="btn btn-primary" href="medical_details" role="button">Medical History</a>
+        <div class="col-md-4 col-sm-6 col-12 fix-h corner" style="background-color: whitesmoke;">
 
-  <table>
-    <tr>
-      <td>Name: </td>
-      <td>
-        <p><%=data[0].fname%> <%=data[0].lname%></p>
-      </td>
-    </tr>
-    <tr>
-      <td>Phno: </td>
-      <td><%=data[0].phno%></td>
-    </tr>
-    <tr>
-      <td>Email: </td>
-      <td><%=data[0].email%></td>
-    </tr>
-    <tr>
-      <td>Date of Birth: </td>
-      <td><%=data[0].dob%></td>
-    </tr>
-    <tr>
-      <td>Gender: </td>
-      <td><%=data[0].gender%></td>
-    </tr>
-    <tr>
-      <td>Address: </td>
-      <td>
-        <p><%=data[0].stno%>, <%=data[0].stname%>, <%=data[0].city%>, <%=data[0].state%>: <%=data[0].zipcode%></p>
-      </td>
-    </tr>
-  </table>
-  <hr>
+          <!-- Personal Details -->
+          <div class="container pt-3">
+            <img class="img-fluid" src="images/64495.png" alt="Profile Image">
+            <br />
+            <center>
+              <p><b>User Id : </b>
+                <i><%=data1[0].userid%></i>
+              </p>
+              <h3><%=data1[0].fname%> <%=data1[0].lname%></h3>
+            </center>
 
-  <a class="btn btn-primary" href="/logout" role="button">Logout</a>
+            <br>
+            <p><b>Phone : </b>
+              <i><%=data1[0].phno%></i>
+            </p>
+
+            <br>
+            <p><b>Email: </b>
+              <i><%=data1[0].email%></i>
+            </p>
+            <br>
+            <p><b>DOB : </b>
+              <i><%=data1[0].dob%></i>
+            </p>
+            <br>
+            <p><b>Address : </b>
+              <i><%=data1[0].stno%>, <%=data1[0].stname%>, <%=data1[0].city%>, <%=data1[0].state%>: <%=data1[0].zipcode%></i>
+            </p>
+
+            <br>
+            <p><b>Gender : </b>
+              <i><%=data1[0].gender%></i>
+            </p>
+
+            <div class="container mb-5">
+              <a href="edit"><button type="click" class="float-right btn btn-danger mx-1 btn-outline mt-1">Edit</button></a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-7 offset-md-1 col-sm-6 col-12 fix-h over corner">
+
+          <div class="container mb-5">
+            <a href="logout"><button type="click" class="float-right btn btn-danger mx-1 btn-outline mt-1">Logout</button></a>
+          </div>
+
+          <div class="container ">
+
+            <!-- Professional Details -->
+            <% if(data5.length>0) { %>
+              <div class="container my-4 myborder">
+                <h3>Prfessional Details</h3>
+                <p><b>Licence No : </b>
+                  <i><%=data5[0].docid%></i>
+                </p>
+
+                <p><b>Qualification: </b>
+                  <i><%=data5[0].qualification%></i>
+                </p>
+
+                <p><b>Hospital : </b>
+                  <i><%=data5[0].hospital%></i>
+                </p>
+
+                <p><b>Department : </b>
+                  <i><%=data5[0].department%></i>
+                </p>
+              </div>
+            <% } %>
+
+            <!--Basic Medical History -->
+            <div class="container my-4 myborder ">
+              <h3>Basic Medical Details</h3>
+              <% if(data2.length>0) { %>
+              <p><b>Weight : </b>
+                <i><%=data2[0].weight%> kg</i>
+              </p>
+
+              <p><b>Height: </b>
+                <i><%=data2[0].height%> cm</i>
+              </p>
+
+              <p><b>Blood Pressure : </b>
+                <i><%=data2[0].bp%> mmHg</i>
+              </p>
+
+              <p><b>Blood Group : </b>
+                <i><%=data2[0].bldgrp%></i>
+              </p>
+
+              <p><b>Allergies : </b>
+                <i><%=data2[0].allergies%></i>
+              </p>
+              <% } else { %>
+                <p>Data Not Found</p>
+              <% } %>
+            </div>
+
+            <!-- Medical History -->
+            <div class="container my-4 myborder">
+              <h3>My Medical History</h3>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Sr No</th>
+                      <th scope="col">Consult Date</th>
+                      <th scope="col">Doctor Id</th>
+                      <th scope="col">Prescription</th>
+                      <th scope="col">Medical Test(s)</th>
+                      <th scope="col">Diagnosis</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
+                      if(data3.length>0) {
+                        var i=1;
+                        data3.forEach(function(data) {
+                    %>
+                    <tr>
+                      <td><%= i %></td>
+                      <td><%= data.cdate %></td>
+                      <td><%= data.docid %></td>
+                      <td><%= data.prescriptions %></td>
+                      <td><%= data.medtests %></td>
+                      <td><%= data.diagnosis %></td>
+                    </tr>
+                    <% i++; }) %>
+                    <% } else { %>
+                    <td>No Data Found</td>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+
+            <!-- Family Members -->
+            <div class="container my-4 myborder">
+              <h3>Family Members</h3>
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">UserId</th>
+                    <th scope="col">Relation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%
+                    if(data4.length>0) {
+                      var i=1;
+                      data4.forEach(function(data) {
+                  %>
+                  <tr>
+                    <td><%= i %></td>
+                    <td><%= data.memberid %></td>
+                    <td><%= data.type %></td>
+                  </tr>
+                  <% i++; }) %>
+                  <% } else { %>
+                  <td>No Data Found</td>
+                  <% } %>
+                </tbody>
+              </table>
+
+            </div>
+
+            <!-- Patients Details -->
+            <% if(data5.length>0) { %>
+              <div class="container my-4 myborder">
+                <h3>My Patients</h3>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Sr No</th>
+                        <th scope="col">Consult Date</th>
+                        <th scope="col">Patient Id</th>
+                        <th scope="col">Prescription</th>
+                        <th scope="col">Medical Test(s)</th>
+                        <th scope="col">Diagnosis</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%
+                        if(data6.length>0) {
+                          var i=1;
+                          data6.forEach(function(data) {
+                      %>
+                      <tr>
+                        <td><%= i %></td>
+                        <td><%= data.cdate %></td>
+                        <td><%= data.pidid %></td>
+                        <td><%= data.prescriptions %></td>
+                        <td><%= data.medtests %></td>
+                        <td><%= data.diagnosis %></td>
+                      </tr>
+                      <% i++; }) %>
+                      <% } else { %>
+                      <td>No Data Found</td>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            <% } %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
 </body>
 
