@@ -47,7 +47,7 @@
             </p>
             <br>
             <p><b>DOB : </b>
-              <i><%=data1[0].dob%></i>
+              <i><%=data1[0].dob.toDateString()%></i>
             </p>
             <br>
             <p><b>Address : </b>
@@ -60,7 +60,7 @@
             </p>
 
             <div class="container mb-5">
-              <a href="edit"><button type="click" class="float-right btn btn-danger mx-1 btn-outline mt-1">Edit</button></a>
+              <a href="edit1"><button type="click" class="float-right btn btn-danger mx-1 btn-outline mt-1">Edit</button></a>
             </div>
 
           </div>
@@ -98,7 +98,7 @@
 
             <!--Basic Medical History -->
             <div class="container my-4 myborder ">
-              <h3>Basic Medical Details</h3>
+              <h3>My Basic Medical Details</h3>
               <% if(data2.length>0) { %>
               <p><b>Weight : </b>
                 <i><%=data2[0].weight%> kg</i>
@@ -122,6 +122,9 @@
               <% } else { %>
                 <p>Data Not Found</p>
               <% } %>
+              <div class="container mb-5">
+                <a href="edit2"><button type="click" class="float-right btn btn-danger mx-1 btn-outline mt-1">Edit</button></a>
+              </div>
             </div>
 
             <!-- Medical History -->
@@ -147,7 +150,7 @@
                     %>
                     <tr>
                       <td><%= i %></td>
-                      <td><%= data.cdate %></td>
+                      <td><%= data.cdate.toDateString() %></td>
                       <td><%= data.docid %></td>
                       <td><%= data.prescriptions %></td>
                       <td><%= data.medtests %></td>
@@ -165,7 +168,7 @@
 
             <!-- Family Members -->
             <div class="container my-4 myborder">
-              <h3>Family Members</h3>
+              <h3>My Family Members</h3>
               <table class="table">
                 <thead class="thead-dark">
                   <tr>
@@ -218,8 +221,8 @@
                       %>
                       <tr>
                         <td><%= i %></td>
-                        <td><%= data.cdate %></td>
-                        <td><%= data.pidid %></td>
+                        <td><%= data.cdate.toDateString() %></td>
+                        <td><%= data.pid %></td>
                         <td><%= data.prescriptions %></td>
                         <td><%= data.medtests %></td>
                         <td><%= data.diagnosis %></td>

@@ -19,7 +19,7 @@ router.post('/register_doctor', async function(req, res, next) {
     lname: req.body.lname,
     phno: req.body.phno,
     email: req.body.email,
-    dob: req.body.dob,
+    dob: req.body.dob.toDateString(),
     stno: req.body.stno,
     stname: req.body.stname,
     city: req.body.city,
