@@ -18,6 +18,7 @@ var patientRegistrationRouter = require('./routes/patient_registration');
 var doctorRegistrationRouter = require('./routes/doctor_registration');
 var dashRouter = require('./routes/dashboard');
 var logoutRouter = require('./routes/logout');
+var updateRouter = require('./routes/update_info');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -39,6 +40,7 @@ app.use('/',doctorRegistrationRouter);
 app.use('/',loginRouter);
 app.use('/',dashRouter);
 app.use('/',logoutRouter);
+app.use('/',updateRouter);
 
 // To serve cross-domain requests
 app.use(function(req, res, next) {
