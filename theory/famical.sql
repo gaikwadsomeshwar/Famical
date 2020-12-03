@@ -42,7 +42,7 @@ CREATE TABLE `consults` (
 
 LOCK TABLES `consults` WRITE;
 /*!40000 ALTER TABLE `consults` DISABLE KEYS */;
-INSERT INTO `consults` VALUES ('33256','23256','2019-12-21','Vitamin B Complex, Vitamin D Capsule','Blood Vitamin Test','Vitamin B12 Deficiency');
+INSERT INTO `consults` VALUES ('33256','23256','2019-12-21','Vitamin B Complex, Vitamin D Capsule','Blood Vitamin Test','Vitamin B12 Deficiency'),('33262','23256','2018-11-23','GLUCOSE',NULL,'DEHYDRATION');
 /*!40000 ALTER TABLE `consults` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -188,7 +188,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES ('33256',83,173,180,'0+','None');
+INSERT INTO `patient` VALUES ('33256',83,173,180,'0+','None'),('33262',56,175,180,'O+','NONE');
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -231,7 +231,6 @@ CREATE TABLE `personal_details` (
   `state` varchar(50) DEFAULT NULL,
   `zipcode` int NOT NULL,
   `gender` varchar(15) DEFAULT NULL,
-  `type` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`userid`),
   UNIQUE KEY `phno` (`phno`),
   UNIQUE KEY `email` (`email`),
@@ -245,7 +244,7 @@ CREATE TABLE `personal_details` (
 
 LOCK TABLES `personal_details` WRITE;
 /*!40000 ALTER TABLE `personal_details` DISABLE KEYS */;
-INSERT INTO `personal_details` VALUES ('33255','Shreyas','Kalrao',9511268012,'shreyaskalrao2001@gmail.com','2001-01-06','65','Sahkarnagar','Pune','Maharashtra',411211,'Male','doctor'),('33256','Someshwar','Gaikwad',7775069747,'gaikwadsomeshwar6@gmail.com','1999-12-15','94/A/3/1','Mundhwa','Pune','Maharashtra',411036,'Male','patient'),('33262','YASH','RATHI',7385305000,'YASHRATHI786@GMAIL.COM','2000-02-15','23','HIGH STREET','SANGLI','MAHARASHTRA',311245,'MALE','patient');
+INSERT INTO `personal_details` VALUES ('33255','Shreyas','Kalrao',9511268012,'shreyaskalrao2001@gmail.com','2001-01-06','65','Sahkarnagar','Pune','Maharashtra',411211,'Male'),('33256','Someshwar','Gaikwad',7775069747,'gaikwadsomeshwar6@gmail.com','1999-12-15','94/A/3/1','Mundhwa','Pune','Maharashtra',411036,'Male'),('33262','YASH','RATHI',7385305000,'YASHRATHI786@GMAIL.COM','2000-02-15','23','HIGH STREET','SANGLI','MAHARASHTRA',311245,'MALE');
 /*!40000 ALTER TABLE `personal_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -306,4 +305,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-01 10:21:59
+-- Dump completed on 2020-12-03 11:33:04
