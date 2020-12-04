@@ -15,7 +15,7 @@ router.get('/dashboard', function(req, res, next) {
                 });
               }
               else {
-                res.render('dashboard',{data1: results1, data2: results2, data3: results3, data4: results4, data5: results5, data6: {}});
+                res.render('dashboard',{data1: results1, data2: results2, data3: results3, data4: results4, data5: [{docid: ""}], data6: [{docid: ""}]});
               }
             });
           });
