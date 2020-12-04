@@ -10,31 +10,27 @@
   <!-- fonts -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-  <!--  jQuery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-  <!-- Bootstrap Date-Picker Plugin -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
-
-  <!-- custom script -->
-  <script>
+  <!-- date and age calculator -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
+  <script src="javascript/jquery.js"></script>
+  <script src="javascript/jquery-ui.js"></script>
+  <script type="text/javascript">
     $(document).ready(function() {
-      var date_input = $('input[name="dob"]'); //our date input has the name "date"
-      var container = "body";
       var age = "";
-      var options = {
-        format: 'yyyy/mm/dd',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
+      $('#dob').datepicker({
         onSelect: function(value, ui) {
           var today = new Date();
           age = today.getFullYear() - ui.selectedYear;
-          $('input[name="age"]') = age;
-        }
-      }
-      date_input.datepicker(options);
+          $('#age').val(age);
+        },
+        changeMonth: true,
+        changeYear: true
+      })
     })
   </script>
 
@@ -81,7 +77,9 @@
               <div class="form-row">
 
                 <div class="form-group col-md-6">
-                  <label><span style="color: red;"><p> <%=(typeof alertMsg!='undefined')? alertMsg:''%></p></span> </label>
+                  <label><span style="color: red;">
+                      <p> <%=(typeof alertMsg!='undefined')? alertMsg:''%></p>
+                    </span> </label>
                 </div>
 
               </div> <!-- form-row.// -->
@@ -188,12 +186,12 @@
 
                 <div class="form-group col-md-6">
                   <label>Date of Birth</label>
-                  <input class="form-control" name="dob" placeholder="YYYY-MM-DD" type="text" />
+                  <input class="form-control" id="dob" name="dob" placeholder="YYYY-MM-DD" type="text" />
                 </div><!-- form-group end.// -->
 
                 <div class="form-group col-md-6">
                   <label>Age</label>
-                  <input name="age" class="form-control" readonly>
+                  <input id="age" name="age" class="form-control" readonly>
                 </div><!-- form-group end.// -->
 
               </div>
