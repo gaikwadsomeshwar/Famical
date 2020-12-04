@@ -80,7 +80,13 @@ router.post('/register_patient', async function(req, res, next) {
                   var sql2 = 'INSERT INTO personal_details SET ?';
                   db.query(sql2, personal_details, function(err, data) {
                     if (err) throw err;
-                    var msg = "Your are successfully registered";
+
+                    // save into patient
+                    db.query('INSERT INTO patient(userid) values(?)', personal_details.userid, function(err, data) {
+                      if (err) throw err;
+
+                      var msg = "Your are successfully registered";
+                    });
                   });
                 });
               }

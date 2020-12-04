@@ -100,7 +100,13 @@ router.post('/register_doctor', async function(req, res, next) {
                         var sql3 = 'INSERT INTO doctor SET ?';
                         db.query(sql3, professional_details, function(err, data) {
                           if (err) throw err;
-                          var msg = "Your are successfully registered";
+
+                          // save into patient
+                          db.query('INSERT INTO patient(userid) values(?)', personal_details.userid, function(err, data) {
+                            if (err) throw err;
+
+                            var msg = "Your are successfully registered";
+                          });
                         });
                       });
                     });
