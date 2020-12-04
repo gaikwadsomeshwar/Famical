@@ -6,7 +6,7 @@ var bcrypt = require('bcryptjs');
 var userid;
 var errmsg;
 
-router.post('/update_personal', async function(req,res,next){
+router.post('/update_personal', async function(req,res,next) {
     userid = req.session.userid;
     var email = req.body.email;
     var phno = req.body.phno;
@@ -54,27 +54,23 @@ router.post('/update_personal', async function(req,res,next){
     db.query('UPDATE personal_details SET email = ?, phno = ?, stno = ?, stname = ?, state = ?, city = ?, zipcode = ? WHERE userid = ?', [email,phno,stno,stname,state,city,zipcode,userid], async function(error, results){
         if(error) throw error;
     });
-
     res.redirect('dashboard');//, {alertMsg:errmsg});
-
 });
 
-
-router.post('/update_professional', async function(req,res,next){
+router.post('/update_professional', async function(req,res,next) {
     userid = req.session.userid;
     var quali = req.body.qualification;
     var hosp = req.body.Hospital;
-    var pos = req.body.position;
+    var dept = req.body.department;
 
-    db.query('UPDATE doctor SET qualification = ?, hospital = ?, department = ? WHERE userid = ?', [quali,hosp,pos,userid], async function(error, results){
+    db.query('UPDATE doctor SET qualification = ?, hospital = ?, department = ? WHERE userid = ?', [quali,hosp,dept,userid], async function(error, results){
         if(error) throw error;
     });
-    
 
     res.redirect('dashboard');
 });
 
-router.post('/update_history', async function(req,res,next){
+router.post('/update_history', async function(req,res,next) {
     userid = req.session.userid;
     var weight = req.body.weight;
     var height = req.body.height;
@@ -94,8 +90,34 @@ router.post('/update_history', async function(req,res,next){
     db.query('UPDATE patient SET weight = ?, height = ?, bp = ?, allergies = ? WHERE userid = ?', [weight,height,bp,allergies,userid], async function(error, results){
         if(error) throw error;
     });
-    
     res.redirect('dashboard');
+});
+
+router.post('/book_appointment', async function(req,res,next) {
+  var pid = req.session.userid;
+  var docid = req.body.docid;
+  var cdate = req.body.consultdate;
+
+  db.query('INSERT into consults values(?, ?, ?, ?, ?, ?)', [pid, docid, cdate, "", "", ""], async function(error, results){
+      if(error) throw error;
+  });
+  res.redirect('dashboard');
+});
+
+router.post('/update_family', async function(req,res,next) {
+  var userid = req.session.userid;
+  var memberid = req.body.memberid;
+  var type = req.body.type;
+
+  if(userid!=memberid) {
+    db.query('INSERT into family values(?, ?, ?)', [userid, memberid, type], async function(error, results){
+        if(error) throw error;
+    });
+    db.query('INSERT into family(userid, memberid) values(?, ?)', [memberid, userid], async function(error, results){
+        if(error) throw error;
+    });
+  }
+  res.redirect('dashboard');
 });
 
 module.exports = router;
