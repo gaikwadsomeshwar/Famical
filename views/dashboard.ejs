@@ -30,10 +30,12 @@
       var date_input = $('input[name="consultdate"]'); //our date input has the name "date"
       var container = "body";
       var options = {
-        format: 'yyyy/mm/dd',
+        format: 'yyyy-mm-dd',
         container: container,
         todayHighlight: true,
-        autoclose: true
+        autoclose: true,
+        startDate: new Date(),
+        endDate: '+10d'
       };
       date_input.datepicker(options);
 
@@ -689,7 +691,7 @@
 
             </div>
 
-            <div class="form-row">            
+            <div class="form-row">
               <!-- Medical Tests -->
               <div class="form-group col-md-12">
                 <label>Diagnosis:</label>
