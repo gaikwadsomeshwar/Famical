@@ -96,7 +96,7 @@ router.post('/update_history', async function(req,res,next) {
 router.post('/book_appointment', async function(req,res,next) {
   var pid = req.session.userid;
   var docid = req.body.docid;
-  var cdate = req.body.consultdate;
+  var cdate = req.body.consultdate.toDateString();
 
   db.query('INSERT into consults values(?, ?, ?, ?, ?, ?)', [pid, docid, cdate, "", "", ""], async function(error, results){
       if(error) throw error;

@@ -26,8 +26,9 @@
 
   <!-- custom script -->
   <script>
+
     $(document).ready(function() {
-      var date_input = $('input[name="consultdate"]'); //our date input has the name "date"
+      var date_input = $('input[name="consult-date"]'); //our date input has the name "date"
       var container = "body";
       var options = {
         format: 'yyyy-mm-dd',
@@ -42,11 +43,16 @@
       let userid = '<%-data1[0].userid%>';
       $('#update-userid').val(userid);
       let flag = '<%-data5.length%>';
-      if(flag > 0) {
+      if (flag > 0) {
         let docid = '<%-data5[0].docid%>';
         $('#update-doc').val(docid);
       }
-    })
+    });
+
+    function sendData(data) {
+      document.getElementById("patientid").value = data;
+    }
+
   </script>
 
 </head>
@@ -110,27 +116,83 @@
 
             <div class="container ">
 
-              <!-- Professional Details -->
+              <!-- Patients Details -->
               <% if(data5[0].docid.length>0) { %>
               <div class="container my-4 myborder">
-                <h3>Professional Details</h3>
-                <p><b>Licence No : </b>
-                  <i><%=data5[0].docid%></i>
-                </p>
-                <p><b>Qualification: </b>
-                  <i><%=data5[0].qualification%></i>
-                </p>
-                <p><b>Hospital : </b>
-                  <i><%=data5[0].hospital%></i>
-                </p>
-                <p><b>Department : </b>
-                  <i><%=data5[0].department%></i>
-                </p>
-                <div class="container mb-5">
-                  <button type="button" class="float-right btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#update-professional-details">Update</button>
+                <h3>My Patients</h3>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Sr No</th>
+                        <th scope="col">Consult Date</th>
+                        <th scope="col">Patient Id</th>
+                        <th scope="col">Prescription</th>
+                        <th scope="col">Medical Test(s)</th>
+                        <th scope="col">Diagnosis</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%
+                        if(data6.length>0) {
+                          var i=1;
+                          data6.forEach(function(data) {
+                      %>
+                      <tr>
+                        <td><%= i %></td>
+                        <td><%= data.cdate.toDateString() %></td>
+                        <td><%= data.pid %></td>
+                        <td><%= data.prescriptions %></td>
+                        <td><%= data.medtests %></td>
+                        <td><% if(data.diagnosis=='') { %>
+                          <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#consult" onclick="sendData(<%=data.pid%>)">Consult</button>
+                          <% } else { %>
+                          <%= data.diagnosis %>
+                          <% } %>
+                        </td>
+                      </tr>
+                      <% i++; }) %>
+                      <% } else { %>
+                      <td>No Data Found</td>
+                      <% } %>
+                    </tbody>
+                  </table>
                 </div>
               </div>
               <% } %>
+
+              <!-- Family Members -->
+              <div class="container my-4 myborder">
+                <h3>My Family Members</h3>
+                <div class="container mb-5">
+                  <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#add-family">Add Members</button>
+                </div>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Sr No</th>
+                      <th scope="col">UserId</th>
+                      <th scope="col">Relation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
+                    if(data4.length>0) {
+                      var i=1;
+                      data4.forEach(function(data) {
+                  %>
+                    <tr>
+                      <td><%= i %></td>
+                      <td><%= data.memberid %></td>
+                      <td><%= data.type %></td>
+                    </tr>
+                    <% i++; }) %>
+                    <% } else { %>
+                    <td>No Data Found</td>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
 
               <!--Basic Medical History -->
               <div class="container my-4 myborder ">
@@ -203,84 +265,26 @@
                     </tbody>
                   </table>
                 </div>
-
               </div>
 
-              <!-- Family Members -->
-              <div class="container my-4 myborder">
-                <h3>My Family Members</h3>
-                <div class="container mb-5">
-                  <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#add-family">Add Members</button>
-                </div>
-                <table class="table">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">Sr No</th>
-                      <th scope="col">UserId</th>
-                      <th scope="col">Relation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <%
-                    if(data4.length>0) {
-                      var i=1;
-                      data4.forEach(function(data) {
-                  %>
-                    <tr>
-                      <td><%= i %></td>
-                      <td><%= data.memberid %></td>
-                      <td><%= data.type %></td>
-                    </tr>
-                    <% i++; }) %>
-                    <% } else { %>
-                    <td>No Data Found</td>
-                    <% } %>
-                  </tbody>
-                </table>
-
-              </div>
-
-              <!-- Patients Details -->
+              <!-- Professional Details -->
               <% if(data5[0].docid.length>0) { %>
               <div class="container my-4 myborder">
-                <h3>My Patients</h3>
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">Sr No</th>
-                        <th scope="col">Consult Date</th>
-                        <th scope="col">Patient Id</th>
-                        <th scope="col">Prescription</th>
-                        <th scope="col">Medical Test(s)</th>
-                        <th scope="col">Diagnosis</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <%
-                        if(data6.length>0) {
-                          var i=1;
-                          data6.forEach(function(data) {
-                      %>
-                      <tr>
-                        <td><%= i %></td>
-                        <td><%= data.cdate %></td>
-                        <td><%= data.pid %></td>
-                        <td><%= data.prescriptions %></td>
-                        <td><%= data.medtests %></td>
-                        <td><% if(data.diagnosis=='') { %>
-                          <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#consult">Consult</button>
-                          <% } else { %>
-                          <%= data.diagnosis %>
-                          <% } %>
-                        </td>
-                      </tr>
-                      <% i++; }) %>
-                      <% } else { %>
-                      <td>No Data Found</td>
-                      <% } %>
-                    </tbody>
-                  </table>
+                <h3>Professional Details</h3>
+                <p><b>Licence No : </b>
+                  <i><%=data5[0].docid%></i>
+                </p>
+                <p><b>Qualification: </b>
+                  <i><%=data5[0].qualification%></i>
+                </p>
+                <p><b>Hospital : </b>
+                  <i><%=data5[0].hospital%></i>
+                </p>
+                <p><b>Department : </b>
+                  <i><%=data5[0].department%></i>
+                </p>
+                <div class="container mb-5">
+                  <button type="button" class="float-right btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#update-professional-details">Update</button>
                 </div>
               </div>
               <% } %>
@@ -584,15 +588,17 @@
             <div class="form-row">
 
               <div class="form-group col-md-6">
-                <label>License No:</label>
+                <label>Type of Doctor:</label>
                 <input class="form-control" name="docid" type="text" required>
               </div>
 
               <!-- Date -->
               <div class="form-group col-md-6">
                 <label>Date:</label>
-                <input type="text" name="consultdate" class="form-control" required>
+                <input type="text" name="consult-date" class="form-control" required>
               </div> <!-- form-group end.// -->
+
+              <button type="button" class="btn btn-primary" onclick=> Search </button>
 
             </div>
 
@@ -652,7 +658,7 @@
 
         <!-- Family Member -->
         <div class="modal-header">
-          <h3 class="modal-title">Conult</h3>
+          <h3 class="modal-title">Cosult</h3>
         </div>
 
         <div class="modal-body">
@@ -663,13 +669,13 @@
 
               <div class="form-group col-md-6">
                 <label>Patient Id:</label>
-                <input class="form-control" name="pid" type="text" readonly>
+                <input class="form-control" id="patientid" name="pid" type="text" readonly>
               </div>
 
               <!-- Consult Date -->
               <div class="form-group col-md-6">
                 <label>Consult Date:</label>
-                <input type="text" name="type" class="form-control" readonly>
+                <input type="text" name="type" id="consult-date2" name="cdate" class="form-control" readonly>
               </div> <!-- form-group end.// -->
 
             </div>
@@ -685,8 +691,8 @@
 
               <!-- Medical Tests -->
               <div class="form-group col-md-6">
-                <label>Consult Date:</label>
-                <input type="text" name="type" class="form-control">
+                <label>Medical Tests:</label>
+                <input type="text" name="medtests" class="form-control">
               </div> <!-- form-group end.// -->
 
             </div>
@@ -695,7 +701,7 @@
               <!-- Medical Tests -->
               <div class="form-group col-md-12">
                 <label>Diagnosis:</label>
-                <input type="text" name="type" class="form-control" required>
+                <input type="textarea" name="type" class="form-control" required>
               </div> <!-- form-group end.// -->
             </div>
 
