@@ -19,7 +19,7 @@ router.post('/register_doctor', async function(req, res, next) {
     lname: req.body.lname,
     phno: req.body.phno,
     email: req.body.email,
-    dob: req.body.dob.toDateString(),
+    dob: req.body.dob,
     stno: req.body.stno,
     stname: req.body.stname,
     city: req.body.city,
@@ -76,7 +76,6 @@ router.post('/register_doctor', async function(req, res, next) {
               if (data.length > 0) {
                 var msg = personal_details.phno + " already exists";
               }
-
               else {
                 // check doc id
                 var docidCheck = 'SELECT * FROM doctor WHERE docid =?';

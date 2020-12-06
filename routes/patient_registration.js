@@ -18,7 +18,7 @@ router.post('/register_patient', async function(req, res, next) {
     lname: req.body.lname,
     phno: req.body.phno,
     email: req.body.email,
-    dob: req.body.dob.toDateString(),
+    dob: req.body.dob,
     stno: req.body.stno,
     stname: req.body.stname,
     city: req.body.city,
@@ -35,8 +35,6 @@ router.post('/register_patient', async function(req, res, next) {
   var pass = user_details.password;
   var hashedpwd = await bcrypt.hash(user_details.password, 8);
   user_details.password = hashedpwd;
-  console.log(pass);
-  console.log(user_details.password);
 
   // check password
   if (pass != req.body.confirm_password) {

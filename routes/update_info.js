@@ -96,7 +96,7 @@ router.post('/update_history', async function(req,res,next) {
 router.post('/book_appointment', async function(req,res,next) {
   var pid = req.session.userid;
   var docid = req.body.docid;
-  var cdate = req.body.consultdate.toDateString();
+  var cdate = req.body.consultdate;
 
   db.query('INSERT into consults values(?, ?, ?, ?, ?, ?)', [pid, docid, cdate, "", "", ""], async function(error, results){
       if(error) throw error;
@@ -104,7 +104,7 @@ router.post('/book_appointment', async function(req,res,next) {
   res.redirect('dashboard');
 });
 
-router.post('/update_family', async function(req,res,next) {
+router.post('/add_family', async function(req,res,next) {
   var userid = req.session.userid;
   var memberid = req.body.memberid;
   var type = req.body.type;
@@ -113,10 +113,24 @@ router.post('/update_family', async function(req,res,next) {
     db.query('INSERT into family values(?, ?, ?)', [userid, memberid, type], async function(error, results){
         if(error) throw error;
     });
-    db.query('INSERT into family(userid, memberid) values(?, ?)', [memberid, userid], async function(error, results){
+    db.query('INSERT into family values(?, ?, ?)', [memberid, userid, ""], async function(error, results){
         if(error) throw error;
     });
   }
+  res.redirect('dashboard');
+});
+
+router.post('/consults', async function(req,res,next) {
+  var pid = req.body.pid;
+  var cdate = req.body.cdate;
+  var prescriptions = req.body.prescriptions;
+  var medtests = req.body.medtests;
+  var diagnosis = req.body.diagnosis;
+  console.log(pid, cdate, prescriptions, medtests, diagnosis);
+
+  db.query('UPDATE consults SET prescriptions = ?, medtests = ?, diagnosis = ? where docid = ? and pid = ? and cdate = ?', [prescriptions, medtests, diagnosis, req.session.userid, pid, cdate], async function(error, results){
+      if(error) throw error;
+  });
   res.redirect('dashboard');
 });
 

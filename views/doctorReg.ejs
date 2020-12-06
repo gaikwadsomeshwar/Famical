@@ -15,26 +15,26 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-  <!-- date and age calculator -->
-  <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
-  <script src="javascript/jquery.js"></script>
-  <script src="javascript/jquery-ui.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      var age = "";
-      $('#dob').datepicker({
-        onSelect: function(value, ui) {
-          var today = new Date();
-          age = today.getFullYear() - ui.selectedYear;
-          $('#age').val(age);
-        },
-        changeMonth: true,
-        changeYear: true,
-        maxDate: new Date()
-      })
-    })
-  </script>
+  <!-- Bootstrap Date-Picker Plugin -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
 
+  <!-- custom script -->
+  <script>
+
+    $(document).ready(function() {
+      var date_input = $('input[name="dob"]'); //our date input has the name "date"
+      var container = "body";
+      var options = {
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true
+      };
+      date_input.datepicker(options);
+    });
+
+  </script>
 
 </head>
 
@@ -159,15 +159,16 @@
                   <label>Email address</label>
                   <input type="email" name="email" class="form-control" required>
 
-                  <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                  <small class="form-text text-muted">We will never share your email with anyone else.</small>
                 </div> <!-- form-group end.// -->
               </div> <!-- form-row.// -->
 
               <!-- GENDER/SEX-->
               <div class="form-group">
 
+                <label>Gender: </label>
+
                 <label class="form-check form-check-inline">
-                  Gender:
                   <input class="form-check-input" type="radio" name="gender" value="Male">
                   <span class="form-check-label"> Male</span>
                 </label>

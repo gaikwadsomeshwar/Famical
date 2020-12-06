@@ -26,9 +26,8 @@
 
   <!-- custom script -->
   <script>
-
     $(document).ready(function() {
-      var date_input = $('input[name="consult-date"]'); //our date input has the name "date"
+      var date_input = $('input[id="consult-date"]'); //our date input has the name "date"
       var container = "body";
       var options = {
         format: 'yyyy-mm-dd',
@@ -49,10 +48,14 @@
       }
     });
 
-    function sendData(data) {
-      document.getElementById("patientid").value = data;
+    function sendPid(data) {
+      document.getElementById("patientid").value = data.pid;
+      document.getElementById("consultdate2").value = data.cdate;
     }
 
+    function sendMid(data) {
+      document.getElementById("memid").value = data;
+    }
   </script>
 
 </head>
@@ -75,7 +78,7 @@
                 <p><b>User Id : </b>
                   <i><%=data1[0].userid%></i>
                 </p>
-                <h3><%=data1[0].fname%> <%=data1[0].lname%></h3>
+                <h3><% if(data5[0].docid.length>0) { %>Dr. <% } %><%=data1[0].fname%> <%=data1[0].lname%></h3>
               </center>
 
               <br>
@@ -89,7 +92,7 @@
               </p>
               <br>
               <p><b>DOB : </b>
-                <i><%=data1[0].dob.toDateString()%></i>
+                <i><%=data1[0].dob.toISOString().substring(0, 10)%></i>
               </p>
               <br>
               <p><b>Address : </b>
@@ -140,12 +143,12 @@
                       %>
                       <tr>
                         <td><%= i %></td>
-                        <td><%= data.cdate.toDateString() %></td>
+                        <td><%= data.cdate.toISOString().substring(0, 10) %></td>
                         <td><%= data.pid %></td>
                         <td><%= data.prescriptions %></td>
                         <td><%= data.medtests %></td>
                         <td><% if(data.diagnosis=='') { %>
-                          <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#consult" onclick="sendData(<%=data.pid%>)">Consult</button>
+                          <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#consult" onclick="sendPid({ pid: <%= data.pid %>, cdate: <%= data.cdate %> })">Consult</button>
                           <% } else { %>
                           <%= data.diagnosis %>
                           <% } %>
@@ -184,7 +187,12 @@
                     <tr>
                       <td><%= i %></td>
                       <td><%= data.memberid %></td>
-                      <td><%= data.type %></td>
+                      <td><% if(data.type=='') { %>
+                        <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#add-relation" onclick="sendMid(<%=data.memberid%>)">Add Relation</button>
+                        <% } else { %>
+                        <%= data.type %>
+                        <% } %>
+                      </td>
                     </tr>
                     <% i++; }) %>
                     <% } else { %>
@@ -252,7 +260,7 @@
                     %>
                       <tr>
                         <td><%= i %></td>
-                        <td><%= data.cdate.toDateString() %></td>
+                        <td><%= data.cdate.toISOString().substring(0, 10) %></td>
                         <td><%= data.docid %></td>
                         <td><%= data.prescriptions %></td>
                         <td><%= data.medtests %></td>
@@ -449,6 +457,7 @@
             </div> <!-- form-row.// -->
 
             <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary"> Update </button>
             </div> <!-- form-group// -->
 
@@ -505,6 +514,7 @@
             </div> <!-- form-row.// -->
 
             <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary"> Update </button>
             </div> <!-- form-group// -->
 
@@ -561,6 +571,7 @@
             </div> <!-- form-row.// -->
 
             <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary"> Update </button>
             </div> <!-- form-group// -->
 
@@ -573,40 +584,81 @@
   </div>
 
   <div id="book-appointment" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
 
         <div class="modal-body">
-          <form method="post" action="book_appointment">
 
-            <!-- BOOK APPOINTMENT -->
-            <div class="modal-header">
-              <h3 class="modal-title">Book an Appointment</h3>
-            </div>
+          <!-- BOOK APPOINTMENT -->
+          <div class="modal-header">
+            <h3 class="modal-title">Book an Appointment</h3>
+          </div>
 
-            <!-- DOCTOR ID-->
-            <div class="form-row">
+          <form action="book_appointment" method="post">
 
-              <div class="form-group col-md-6">
-                <label>Type of Doctor:</label>
-                <input class="form-control" name="docid" type="text" required>
+            <div class="container mt-3">
+
+              <div class="form-row">
+
+                <div class="form-group col-md-6">
+                  <label>Search for Doctors, Department or Hospital:</label>
+                  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>Your User Id:</label>
+                  <input class="form-control" name="userid" type="text" value="<%= data1[0].userid %>" readonly>
+                </div>
               </div>
+              <br>
 
-              <!-- Date -->
-              <div class="form-group col-md-6">
-                <label>Date:</label>
-                <input type="text" name="consult-date" class="form-control" required>
-              </div> <!-- form-group end.// -->
-
-              <button type="button" class="btn btn-primary" onclick=> Search </button>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Licence No.</th>
+                    <th>Name</th>
+                    <th>Hospital</th>
+                    <th>Department</th>
+                    <th>Select Date</th>
+                    <th>Book Now</th>
+                  </tr>
+                </thead>
+                <tbody id="myTable">
+                <tbody>
+                  <%
+                    if(data0.length>0) {
+                      data0.forEach(function(data) {
+                    %>
+                  <tr>
+                    <td><input class="form-control" type="text" name="docid" value="<%= data.docid %>" readonly></td>
+                    <td>Dr. <%= data.fname %> <%= data.lname %></td>
+                    <td><%= data.hospital %></td>
+                    <td><%= data.department %></td>
+                    <td><input class="form-control" type="text" id="consult-date" name="consultdate"></td>
+                    <td><button type="submit" class="btn btn-primary"> Book </button></td>
+                    <% })} %>
+                </tbody>
+              </table>
 
             </div>
-
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary"> Book Appointment </button>
-            </div> <!-- form-group// -->
 
           </form>
+
+          <script>
+            $(document).ready(function() {
+              $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+              });
+            });
+          </script>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div> <!-- form-group// -->
+
 
         </div>
       </div>
@@ -618,7 +670,7 @@
       <div class="modal-content">
 
         <div class="modal-body">
-          <form method="post" action="update_family">
+          <form method="post" action="add_family">
 
             <!-- Family Member -->
             <div class="modal-header">
@@ -642,6 +694,7 @@
             </div>
 
             <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary"> Add </button>
             </div> <!-- form-group// -->
 
@@ -658,11 +711,11 @@
 
         <!-- Family Member -->
         <div class="modal-header">
-          <h3 class="modal-title">Cosult</h3>
+          <h3 class="modal-title">Consult</h3>
         </div>
 
         <div class="modal-body">
-          <form method="post" action="conult">
+          <form method="post" action="consults">
 
             <!-- PATIENT ID-->
             <div class="form-row">
@@ -675,7 +728,7 @@
               <!-- Consult Date -->
               <div class="form-group col-md-6">
                 <label>Consult Date:</label>
-                <input type="text" name="type" id="consult-date2" name="cdate" class="form-control" readonly>
+                <input type="text" name="type" id="consultdate2" name="cdate" class="form-control" readonly>
               </div> <!-- form-group end.// -->
 
             </div>
@@ -701,12 +754,53 @@
               <!-- Medical Tests -->
               <div class="form-group col-md-12">
                 <label>Diagnosis:</label>
-                <input type="textarea" name="type" class="form-control" required>
+                <input type="textarea" name="diagnosis" class="form-control" required>
               </div> <!-- form-group end.// -->
             </div>
 
             <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary"> Consult </button>
+            </div> <!-- form-group// -->
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="add-relation" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-body">
+          <form method="post" action="update_family">
+
+            <!-- Family Member -->
+            <div class="modal-header">
+              <h3 class="modal-title">Add your Relation</h3>
+            </div>
+
+            <!-- USER ID-->
+            <div class="form-row">
+
+              <div class="form-group col-md-6">
+                <label>User Id:</label>
+                <input class="form-control" id="memid" name="memberid" type="text" readonly>
+              </div>
+
+              <!-- Relation -->
+              <div class="form-group col-md-6">
+                <label>Relation:</label>
+                <input type="text" name="type" class="form-control" required>
+              </div> <!-- form-group end.// -->
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary"> Add </button>
             </div> <!-- form-group// -->
 
           </form>
