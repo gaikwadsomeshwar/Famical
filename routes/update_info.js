@@ -120,6 +120,18 @@ router.post('/add_family', async function(req,res,next) {
   res.redirect('dashboard');
 });
 
+router.post('/update_family', async function(req,res,next) {
+  var userid = req.session.userid;
+  var memberid = req.body.memberid;
+  var type = req.body.type;
+
+  db.query('UPDATE family set type = ? where userid = ? and memberid = ?', [type, userid, memberid], async function(error, results){
+    if(error) throw error;
+  });
+
+  res.redirect('dashboard');
+});
+
 router.post('/consults', async function(req,res,next) {
   var pid = req.body.pid;
   var cdate = req.body.cdate;
@@ -128,7 +140,7 @@ router.post('/consults', async function(req,res,next) {
   var diagnosis = req.body.diagnosis;
   console.log(pid, cdate, prescriptions, medtests, diagnosis);
 
-  db.query('UPDATE consults SET prescriptions = ?, medtests = ?, diagnosis = ? where docid = ? and pid = ? and cdate = ?', [prescriptions, medtests, diagnosis, req.session.userid, pid, cdate], async function(error, results){
+  db.query('UPDATE consults SET prescriptions = ?, medtests = ?, diagnosis = ? where docid = ? and pid = ? and diagnosis = ""', [prescriptions, medtests, diagnosis, req.session.userid, pid, cdate], async function(error, results){
       if(error) throw error;
   });
   res.redirect('dashboard');
