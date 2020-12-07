@@ -48,13 +48,28 @@
       }
     });
 
-    function sendPid(data) {
-      document.getElementById("patientid").value = data.pid;
-      document.getElementById("consultdate2").value = data.cdate;
+    function sendPid(pid, cdate) {
+      document.getElementById("patientid").value = pid;
+      document.getElementById("consultdate2").value = cdate;
     }
 
-    function sendMid(data) {
-      document.getElementById("memid").value = data;
+    function sendFamPersonalDetails(fname, lname, phno, email) {
+      document.getElementById("gfd-name").value = fname + " " + lname;
+      document.getElementById("gfd-phno").value = phno;
+      document.getElementById("gfd-email").value = email;
+    }
+
+    function sendDocDetails(fname, lname, phno, email, hospital, department) {
+      document.getElementById("gdd-name").value = fname + " " + lname;
+      document.getElementById("gdd-phno").value = phno;
+      document.getElementById("gdd-email").value = email;
+      document.getElementById("gdd-hospital").value = hospital;
+      document.getElementById("gdd-department").value = department;
+    }
+
+    function sendFamName(memid, fname, lname) {
+      document.getElementById("memid").value = memid;
+      document.getElementById("ar-name").value = fname + " " + lname;
     }
   </script>
 
@@ -148,7 +163,7 @@
                         <td><%= data.prescriptions %></td>
                         <td><%= data.medtests %></td>
                         <td><% if(data.diagnosis=='') { %>
-                          <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#consult" onclick="sendPid({ pid: <%= data.pid %>, cdate: <%= data.cdate %> })">Consult</button>
+                          <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#consult" onclick="sendPid('<%= data.pid %>', '<%= data.cdate %>')">Consult</button>
                           <% } else { %>
                           <%= data.diagnosis %>
                           <% } %>
@@ -186,9 +201,9 @@
                   %>
                     <tr>
                       <td><%= i %></td>
-                      <td><%= data.memberid %></td>
+                      <td data-toggle="modal" data-target="#get-family-details" onclick="sendFamPersonalDetails('<%=data.fname%>', '<%=data.lname%>', '<%=data.phno%>', '<%=data.email%>')"><%= data.fname %> <%= data.lname %></td>
                       <td><% if(data.type=='') { %>
-                        <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#add-relation" onclick="sendMid(<%=data.memberid%>)">Add Relation</button>
+                        <button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#add-relation" onclick="sendFamName('<%= data.memberid %>', '<%=data.fname%>', '<%=data.lname%>')">Add Relation</button>
                         <% } else { %>
                         <%= data.type %>
                         <% } %>
@@ -246,7 +261,7 @@
                       <tr>
                         <th scope="col">Sr No</th>
                         <th scope="col">Consult Date</th>
-                        <th scope="col">Doctor Id</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Prescription</th>
                         <th scope="col">Medical Test(s)</th>
                         <th scope="col">Diagnosis</th>
@@ -261,7 +276,8 @@
                       <tr>
                         <td><%= i %></td>
                         <td><%= data.cdate.toISOString().substring(0, 10) %></td>
-                        <td><%= data.docid %></td>
+                        <td data-toggle="modal" data-target="#get-doc-details" onclick="sendDocDetails('<%=data.fname%>', '<%=data.lname%>', '<%=data.phno%>', '<%=data.email%>', '<%=data.hospital%>', '<%=data.department%>')">Dr. <%= data.fname %>
+                          <%= data.lname %></td>
                         <td><%= data.prescriptions %></td>
                         <td><%= data.medtests %></td>
                         <td><%= data.diagnosis %></td>
@@ -306,7 +322,7 @@
   </div>
 
   <div id="update-user" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
         <div class="modal-body">
@@ -406,7 +422,6 @@
               <div class="form-group col-md-6">
                 <label>State</label>
                 <select name="state" class="form-control">
-                  <option selected=""> Choose...</option>
 
                   <option value="Andhra Pradesh">Andhra Pradesh</option>
                   <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -470,7 +485,7 @@
   </div>
 
   <div id="update-professional-details" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
         <div class="modal-body">
@@ -527,7 +542,7 @@
   </div>
 
   <div id="update-history" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
         <div class="modal-body">
@@ -666,7 +681,7 @@
   </div>
 
   <div id="add-family" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
         <div class="modal-body">
@@ -688,7 +703,17 @@
               <!-- Relation -->
               <div class="form-group col-md-6">
                 <label>Relation:</label>
-                <input type="text" name="type" class="form-control" required>
+                <select name="type" class="form-control">
+
+                  <option value="spouse">Spouse</option>
+                  <option value="child">Child</option>
+                  <option value="father">Father</option>
+                  <option value="mother">Mother</option>
+                  <option value="grand parent">Grand Parent</option>
+                  <option value="grand child">Grand Child</option>
+                  <option value="cousin">Cousin</option>
+
+                </select>
               </div> <!-- form-group end.// -->
 
             </div>
@@ -706,7 +731,7 @@
   </div>
 
   <div id="consult" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
         <!-- Family Member -->
@@ -771,7 +796,7 @@
   </div>
 
   <div id="add-relation" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
         <div class="modal-body">
@@ -784,16 +809,33 @@
 
             <!-- USER ID-->
             <div class="form-row">
-
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-12">
                 <label>User Id:</label>
                 <input class="form-control" id="memid" name="memberid" type="text" readonly>
+              </div>
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col-md-6">
+                <label>Name:</label>
+                <input class="form-control" id="ar-name" type="text" readonly>
               </div>
 
               <!-- Relation -->
               <div class="form-group col-md-6">
                 <label>Relation:</label>
-                <input type="text" name="type" class="form-control" required>
+                <select name="type" class="form-control">
+
+                  <option value="spouse">Spouse</option>
+                  <option value="child">Child</option>
+                  <option value="father">Father</option>
+                  <option value="mother">Mother</option>
+                  <option value="grand parent">Grand Parent</option>
+                  <option value="grand child">Grand Child</option>
+                  <option value="cousin">Cousin</option>
+
+                </select>
               </div> <!-- form-group end.// -->
 
             </div>
@@ -806,6 +848,102 @@
           </form>
 
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="get-family-details" class="modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-body">
+
+          <!-- Member Details -->
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Name: </label>
+              <input style="width: 100%" type="text" id="gfd-name" readonly>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Phone No:</label>
+              <input style="width: 100%" type="text" id="gfd-phno" readonly>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Email:</label>
+              <input style="width: 100%" type="text" id="gfd-email" readonly>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div> <!-- form-group// -->
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="get-doc-details" class="modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-body">
+
+          <!-- Member Details -->
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Name: </label>
+              <input style="width: 100%" type="text" id="gdd-name" readonly>
+            </div>
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group col-md-6">
+              <label>Phone No:</label>
+              <input style="width: 100%" type="text" id="gdd-phno" readonly>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Email:</label>
+              <input style="width: 100%" type="text" id="gdd-email" readonly>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group col-md-6">
+              <label>Hospital:</label>
+              <input style="width: 100%" type="text" id="gdd-hospital" readonly>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Department:</label>
+              <input style="width: 100%" type="text" id="gdd-department" readonly>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div> <!-- form-group// -->
+
+          </form>
+
+        </div>
+
       </div>
     </div>
   </div>
