@@ -23,14 +23,14 @@ DROP TABLE IF EXISTS `consults`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `consults` (
-  `pid` varchar(25) DEFAULT NULL,
-  `docid` varchar(10) DEFAULT NULL,
-  `cdate` date DEFAULT NULL,
+  `pid` varchar(25) NOT NULL,
+  `docid` varchar(10) NOT NULL,
+  `cdate` date NOT NULL,
   `prescriptions` varchar(100) DEFAULT NULL,
   `medtests` varchar(100) DEFAULT NULL,
   `diagnosis` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`docid`,`pid`,`cdate`),
   KEY `pid` (`pid`),
-  KEY `docid` (`docid`),
   CONSTRAINT `consults_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `patient` (`userid`),
   CONSTRAINT `consults_ibfk_2` FOREIGN KEY (`docid`) REFERENCES `doctor` (`docid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -42,6 +42,7 @@ CREATE TABLE `consults` (
 
 LOCK TABLES `consults` WRITE;
 /*!40000 ALTER TABLE `consults` DISABLE KEYS */;
+INSERT INTO `consults` VALUES ('614000','23257','2020-12-09','','',''),('615000','23257','2020-12-09','ORS','','Dehydration');
 /*!40000 ALTER TABLE `consults` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -91,6 +92,7 @@ CREATE TABLE `doctor` (
 
 LOCK TABLES `doctor` WRITE;
 /*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
+INSERT INTO `doctor` VALUES ('33256','23257','MBBS, MD','SAHYADRI ','ORTHOPAEDIC');
 /*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -128,15 +130,15 @@ DELIMITER ;;
     IF new.qualification = '' THEN
         SET new.qualification = upper(old.qualification);
     ELSE
-        SET new.qualification = upper(new.qualification);
-    END IF;             
+        SET new.qualification = upper(concat(old.qualification,", ",new.qualification));
+    END IF;
 
     IF new.hospital = '' THEN
         SET new.hospital = upper(old.hospital);
     ELSE
         SET new.hospital = upper(new.hospital);
     END IF;
-    
+
     IF new.department = '' THEN
         SET new.department = upper(old.department);
     ELSE
@@ -161,7 +163,7 @@ CREATE TABLE `family` (
   `userid` varchar(25) NOT NULL,
   `memberid` varchar(25) NOT NULL,
   `type` varchar(15) DEFAULT NULL,
-  KEY `userid` (`userid`),
+  PRIMARY KEY (`userid`,`memberid`),
   KEY `memberid` (`memberid`),
   CONSTRAINT `family_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `patient` (`userid`),
   CONSTRAINT `family_ibfk_2` FOREIGN KEY (`memberid`) REFERENCES `patient` (`userid`)
@@ -174,6 +176,7 @@ CREATE TABLE `family` (
 
 LOCK TABLES `family` WRITE;
 /*!40000 ALTER TABLE `family` DISABLE KEYS */;
+INSERT INTO `family` VALUES ('33256','614000','FATHER'),('33256','615000','MOTHER'),('614000','33256',''),('615000','33256','');
 /*!40000 ALTER TABLE `family` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -221,6 +224,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
+INSERT INTO `patient` VALUES ('241919',NULL,NULL,NULL,NULL,NULL),('33256',NULL,NULL,NULL,NULL,NULL),('614000',NULL,NULL,NULL,NULL,NULL),('615000',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -255,21 +259,21 @@ DELIMITER ;;
 
     IF new.weight = 0 THEN
         SET new.weight = old.weight;
-    END IF;             
+    END IF;
 
     IF new.height = 0 THEN
         SET new.height = old.height;
-    END IF; 
+    END IF;
 
     IF new.bp = 0 THEN
         SET new.bp = old.bp;
-    END IF; 
+    END IF;
 
     IF new.allergies = '' THEN
         SET new.allergies = upper(old.allergies);
     ELSE
-        SET new.allergies = upper(new.allergies);
-    END IF;   
+        SET new.allergies = upper(old.allergies+", "+new.allergies);
+    END IF;
 
 END */;;
 DELIMITER ;
@@ -291,7 +295,7 @@ CREATE TABLE `personal_details` (
   `lname` varchar(30) NOT NULL,
   `phno` bigint NOT NULL,
   `email` varchar(50) NOT NULL,
-  `dob` date NOT NULL,
+  `dob` datetime DEFAULT NULL,
   `stno` varchar(10) DEFAULT NULL,
   `stname` varchar(20) DEFAULT NULL,
   `city` varchar(30) DEFAULT NULL,
@@ -311,6 +315,7 @@ CREATE TABLE `personal_details` (
 
 LOCK TABLES `personal_details` WRITE;
 /*!40000 ALTER TABLE `personal_details` DISABLE KEYS */;
+INSERT INTO `personal_details` VALUES ('241919','KRISHNA','GAIKWAD',9158414000,'KRISHNAGAIKWAD10@GMAIL.COM','2000-04-09 00:00:00','402','HANUMAN NAGAR','PUNE','MAHARASHTRA',411036,'MALE'),('33256','SOMESHWAR','GAIKWAD',7775069747,'GAIKWADSOMESHWAR@GMAIL.COM','1999-12-15 00:00:00','94/A/3/1','MUNDHWA','PUNE','MAHARASHTRA',411036,'MALE'),('614000','KIRAN','GAIKWAD',9158614000,'KIRANGAIKWAD@GMAIL.COM','1973-01-11 00:00:00','94/A/3/1','MUNDHWA','PUNE','MAHARASHTRA',411036,'MALE'),('615000','DEEPIKA','GAIKWAD',9158615000,'2015NMJADHAV@GMAIL.COM','1980-02-24 00:00:00','94/A/3/1','MUNDHWA','PUNE','MAHARASHTRA',411036,'FEMALE');
 /*!40000 ALTER TABLE `personal_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -411,6 +416,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('241919','$2a$08$B0yVNtOVgBbJ5bNislEb/eM/r0mn2b9CalNDMYHd5Hpi6HlVeNNAG'),('33256','$2a$08$YJ6TkmdhGADo/V2FCzFeY.InlL4qtqcxE/mBFOOGgOlHeFnXp2blC'),('614000','$2a$08$DRGLlQtemy1dZU1KOnOedunVftxck3eTEZcay/4fUxHvk3zut1M3e'),('615000','$2a$08$V5VRpnkxH7q/t2iolw//WOIprYsURZaPf/zSNjgD5M075kL8/Kf3i');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -423,4 +429,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-05 14:03:22
+-- Dump completed on 2020-12-07 10:35:40
