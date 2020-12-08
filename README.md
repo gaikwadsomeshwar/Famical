@@ -1,5 +1,6 @@
 # Famical
-A Database Project to Store and Track your Family Medical Health. 
+
+A Database Project to Store and Track your Family Medical Health.
 
 # Languages:
 
@@ -22,5 +23,3 @@ The "views" folder contains all the front-end codes in .ejs format.
 "database.js" file is the database configuration file.
 
 "app.js" is the main file that is required to be executed.
-
-
