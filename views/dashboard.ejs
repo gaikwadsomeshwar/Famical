@@ -159,7 +159,7 @@
                       <tr>
                         <td><%= i %></td>
                         <td><%= data.cdate.toISOString().substring(0, 10) %></td>
-                        <td><%= data.pid %></td>
+                        <td data-toggle="modal" data-target="#get-family-details" onclick="sendFamPersonalDetails('<%=data.fname%>', '<%=data.lname%>', '<%=data.phno%>', '<%=data.email%>')"><%= data.pid %></td>
                         <td><%= data.prescriptions %></td>
                         <td><%= data.medtests %></td>
                         <td><% if(data.diagnosis=='') { %>
@@ -189,7 +189,7 @@
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col">Sr No</th>
-                      <th scope="col">UserId</th>
+                      <th scope="col">Name</th>
                       <th scope="col">Relation</th>
                     </tr>
                   </thead>
@@ -215,6 +215,37 @@
                     <% } %>
                   </tbody>
                 </table>
+
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Sr No</th>
+                      <th scope="col">Consult Date</th>
+                      <th scope="col">Patient Id</th>
+                      <th scope="col">Prescription</th>
+                      <th scope="col">Diagnosis</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
+                      if(data7.length>0) {
+                        var i=1;
+                        data7.forEach(function(data) {
+                    %>
+                    <tr>
+                      <td><%= i %></td>
+                      <td><%= data.cdate.toISOString().substring(0, 10) %></td>
+                      <td><%= data.pid %></td>
+                      <td><%= data.prescriptions %></td>
+                      <td><%= data.diagnosis %></td>
+                    </tr>
+                    <% i++; }) %>
+                    <% } else { %>
+                    <td>No Data Found</td>
+                    <% } %>
+                  </tbody>
+                </table>
+
               </div>
 
               <!--Basic Medical History -->
@@ -751,12 +782,12 @@
               </div>
 
               <!-- Consult Date -->
-              <div class="form-group col-md-6">
-                <label>Consult Date:</label>
-                <input type="text" name="type" id="consultdate2" name="cdate" class="form-control" readonly>
-              </div> <!-- form-group end.// -->
+                <div class="form-group col-md-6">
+                  <label>Consult Date:</label>
+                  <input type="text" id="consultdate2" name="cdate" class="form-control" readonly>
+                </div> <!-- form-group end.// -->
 
-            </div>
+              </div>
 
             <!-- Consultation -->
             <div class="form-row">
