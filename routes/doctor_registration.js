@@ -101,7 +101,7 @@ router.post('/register_doctor', async function(req, res, next) {
                           if (err) throw err;
 
                           // save into patient
-                          db.query('INSERT INTO patient(userid) values(?)', personal_details.userid, function(err, data) {
+                          db.query('INSERT INTO patient(userid) values(?, ?)', personal_details.userid, req.body.bldgrp, function(err, data) {
                             if (err) throw err;
 
                             var msg = "Your are successfully registered";
