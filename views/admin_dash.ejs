@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Admin Dash</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- css -->
+  <link rel="stylesheet" href="css/dashboard.css">
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <script>
+    function confirmDeleteDoc() {
+      confirm("Confomation for Doctor information deletion!!!\nNote : If you press ok Doctor's all information will be deleted premanently.");
+    }
+
+    function confirmDeletePat() {
+      confirm("Confomation for Patient information deletion!!!\nNote : If you press ok Patient's all information will be deleted premanently.");
+    }
+  </script>
+
+</head>
+
+<body style="overflow-x: hidden;">
+
+  <main style="background-color: #4E7690;">
+    <div class="container p-0 py-5 ">
+      <div class="row p-2 corner" style="background-color: #89A5B8;">
+
+        <div class="col-md-12">
+
+          <div class="container mb-5">
+            <a href="logout"><button type="click" class="float-right btn btn-danger mx-1 btn-outline mt-1">Logout</button></a>
+          </div>
+
+          <div class="container">
+
+            <div class="container my-4 myborder">
+
+              <h3>All Medical History</h3>
+              <table id="history-table" class="table">
+
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label>Search in History:</label>
+                    <input class="form-control" id="history-input" type="text" placeholder="Search..">
+                  </div>
+                </div>
+
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">Doctor Id</th>
+                    <th scope="col">Patient ID</th>
+                    <th scope="col">Medical Tests</th>
+                    <th scope="col">Diagnosis</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%
+                    if(data3.length>0) {
+                      var i=1;
+                      data3.forEach(function(data) {
+                  %>
+                  <tr>
+                    <td><%= i %></td>
+                    <td><%= data.docid %></td>
+                    <td><%= data.pid %></td>
+                    <td><%= data.medtests %></td>
+                    <td><%= data.diagnosis %></td>
+                  </tr>
+                  <% i++; }) %>
+                  <% } else { %>
+                  <td>No Data Found</td>
+                  <% } %>
+                </tbody>
+              </table>
+
+              <script>
+                $(document).ready(function() {
+                  $("#history-input").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#history-table tr").filter(function() {
+                      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                  });
+                });
+              </script>
+
+            </div>
+
+            <div class="container my-4 myborder">
+
+              <h3>Doctor List</h3>
+              <table id="doctor-table" class="table">
+
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label>Search in Doctor:</label>
+                    <input class="form-control" id="doctor-input" type="text" placeholder="Search..">
+                  </div>
+                </div>
+
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Hospital</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%
+                    if(data2.length>0) {
+                      var i=1;
+                      data2.forEach(function(data) {
+                  %>
+                  <tr>
+                    <td><%= i %></td>
+                    <td><%= data.fname %> <%= data.lname %></td>
+                    <td><%= data.hospital %></td>
+                    <td><%= data.department %></td>
+                    <td><%= data.email %></td>
+                  </tr>
+                  <% i++; }) %>
+                  <% } else { %>
+                  <td>No Data Found</td>
+                  <% } %>
+                </tbody>
+              </table>
+
+              <script>
+                $(document).ready(function() {
+                  $("#doctor-input").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#doctor-table tr").filter(function() {
+                      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                  });
+                });
+              </script>
+
+            </div>
+
+            <div class="container my-4  myborder">
+
+              <h3>User List</h3>
+              <table id="personal-table" class="table">
+
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label>Search in Doctor:</label>
+                    <input class="form-control" id="personal-input" type="text" placeholder="Search..">
+                  </div>
+                </div>
+
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sr No</th>
+                    <th scope="col">User Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone No</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%
+                    if(data1.length>0) {
+                      var i=1;
+                      data1.forEach(function(data) {
+                  %>
+                  <tr>
+                    <td><%= i %></td>
+                    <td><%= data.userid %></td>
+                    <td><%= data.fname %> <%= data.lname %></td>
+                    <td><%= data.phno %></td>
+                    <td><%= data.email %></td>
+                    <td><button type="button" class="btn btn-danger mx-1 btn-outline mt-1" data-toggle="modal" data-target="#">Delete</button></td>
+                  </tr>
+                  <% i++; }) %>
+                  <% } else { %>
+                  <td>No Data Found</td>
+                  <% } %>
+                </tbody>
+              </table>
+
+              <script>
+                $(document).ready(function() {
+                  $("#personal-input").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#personal-table tr").filter(function() {
+                      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                  });
+                });
+              </script>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+
+</html>
