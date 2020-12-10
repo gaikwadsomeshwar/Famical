@@ -98,6 +98,7 @@ router.post('/book_appointment', async function(req,res,next) {
   var docid = req.body.docid;
   var cdate = req.body.consultdate;
 
+
   db.query('INSERT into consults values(?, ?, ?, ?, ?, ?)', [pid, docid, cdate, "", "", ""], async function(error, results){
       if(error) throw error;
   });
@@ -133,17 +134,46 @@ router.post('/update_family', async function(req,res,next) {
 });
 
 router.post('/consults', async function(req,res,next) {
-  var pid = req.body.pid;
-  var cdate = req.body.cdate;
-  var prescriptions = req.body.prescriptions;
-  var medtests = req.body.medtests;
-  var diagnosis = req.body.diagnosis;
-  console.log(pid, cdate, prescriptions, medtests, diagnosis);
 
-  db.query('UPDATE consults SET prescriptions = ?, medtests = ?, diagnosis = ? where docid = ? and pid = ? and diagnosis = ""', [prescriptions, medtests, diagnosis, req.session.userid, pid, cdate], async function(error, results){
-      if(error) throw error;
+
+  var docid;
+
+  db.query('SELECT docid from doctor where userid = ?',[req.session.userid],async function(error, results){
+    if(error) throw error;
+
+    docid = results[0].docid;
+    var pid = req.body.pid;
+    var cdate = req.body.cdate;
+    var prescriptions = req.body.prescriptions;
+    var medtests = req.body.medtests;
+    var diagnosis = req.body.diagnosis;
+  
+    function formatDate(date) {
+      var d = new Date(date),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+  
+      if (month.length < 2) 
+          month = '0' + month;
+      if (day.length < 2) 
+          day = '0' + day;
+  
+      return [year, month, day].join('-');
+  }
+  
+    cdate = formatDate(cdate);
+  
+    db.query('UPDATE consults SET prescriptions = ?, medtests = ?, diagnosis = ? where docid = ? and pid = ? and cdate = ?', [prescriptions, medtests, diagnosis, docid, pid, cdate], async function(error, results){
+        if(error) throw error;
+  
+        console.log(results);
+    });
+    
   });
   res.redirect('dashboard');
 });
+
+
 
 module.exports = router;
