@@ -16,6 +16,20 @@ router.post('/login', function(req, res) {
   var password = req.body.password;
 
   if(userid == "admin" && password == "admin") {
+    const id = userid;
+    token = jwt.sign({
+      id: id
+    }, 'supersecretpassword', {
+      expiresIn: '100d'
+    });
+    const cookieOptions = {
+      expires: new Date(
+        Date.now() + 100 * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: true
+    }
+
+    res.cookie('jwt', token, cookieOptions);
     req.session.loggedinUser = true;
     req.session.userid = userid;
     res.redirect('/admin_dash');

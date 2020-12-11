@@ -5,7 +5,7 @@ var db = require('../database');
 router.get('/admin_dash', function(req, res, next) {
   if (req.session.loggedinUser) {
 
-    db.query("SELECT userid, fname, lname, phno, email from personal_details", function(error, results1) {
+    db.query("SELECT userid, fname, lname, phno, email, city from personal_details", function(error, results1) {
 
       db.query("SELECT fname, lname, email, hospital, department FROM personal_details, doctor where personal_details.userid = doctor.userid", function(error, results2) {
 
@@ -31,7 +31,7 @@ router.get('/dashboard', function(req, res, next) {
         db.query("SELECT * from patient where userid = ?", [req.session.userid], function(error, results2) {
 
           //Medical History of Logged in User
-          db.query("SELECT pid, fname, lname, email, phno, hospital, department, consults.docid, cdate, prescriptions, medtests, diagnosis  from consults, personal_details, doctor where pid = ? and doctor.userid = personal_details.userid", [req.session.userid], function(error, results3) {
+          db.query("SELECT pid, fname, lname, email, phno, hospital, department, consults.docid, cdate, prescriptions, medtests, diagnosis  from consults, personal_details, doctor where pid = ? and doctor.userid = personal_details.userid and doctor.docid = consults.docid and consults.pid = ?", [req.session.userid, req.session.userid], function(error, results3) {
 
             //Family Members of Logged in User
             db.query("SELECT fname, lname, email, phno, family.userid, memberid, type from family, personal_details where family.userid = ? and family.memberid = personal_details.userid", [req.session.userid], function(error, results4) {
