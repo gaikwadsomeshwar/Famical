@@ -57,11 +57,11 @@ router.post('/update_personal', async function(req, res, next) {
 
 router.post('/update_professional', async function(req, res, next) {
   userid = req.session.userid;
-  var quali = req.body.qualification;
-  var hosp = req.body.Hospital;
-  var dept = req.body.department;
+  var qualification = req.body.qualification;
+  var hospital = req.body.Hospital;
+  var department = req.body.department;
 
-  db.query('UPDATE doctor SET qualification = ?, hospital = ?, department = ? WHERE userid = ?', [quali, hosp, dept, userid], async function(error, results) {
+  db.query('UPDATE doctor SET qualification = ?, hospital = ?, department = ? WHERE userid = ?', [qualification, hospital, department, userid], async function(error, results) {
     if (error) throw error;
   });
 
@@ -75,19 +75,12 @@ router.post('/update_history', async function(req, res, next) {
   var bp = req.body.bp;
   var allergies = req.body.allergies;
 
-  if (weight == '') {
-    weight = 0;
-  }
-  if (height == '') {
-    height = 0;
-  }
-  if (bp == '') {
-    bp = 0;
-  }
+  console.log(weight, height, bp, allergies);
 
   db.query('UPDATE patient SET weight = ?, height = ?, bp = ?, allergies = ? WHERE userid = ?', [weight, height, bp, allergies, userid], async function(error, results) {
     if (error) throw error;
   });
+
   res.redirect('dashboard');
 });
 
@@ -96,7 +89,14 @@ router.post('/book_appointment', async function(req, res, next) {
   var docid = req.body.docid;
   var cdate = req.body.consultdate;
 
-  db.query('INSERT into consults values(?, ?, ?, ?, ?, ?)', [pid, docid, cdate, "", "", ""], async function(error, results) {
+  var i;
+  for(i = 0; i < cdate.length; i++) {
+    if(cdate[i] != '') {
+      break;
+    }
+  }
+
+  db.query('INSERT into consults(pid, docid, cdate, prescriptions, medtests, diagnosis) values(?,?,?,?,?,?)', [pid, docid[i], cdate[i], "", "", ""], async function(error, results) {
     if (error) throw error;
   });
   res.redirect('dashboard');
