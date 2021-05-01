@@ -45,4 +45,11 @@ BEGIN
   SET NEW.type= UPPER(NEW.type);
 END //
 
+CREATE TRIGGER uppercase6 BEFORE update ON family FOR EACH ROW
+BEGIN
+  SET NEW.userid = UPPER(OLD.userid);
+  SET NEW.memberid = UPPER(OLD.memberid);
+  SET NEW.type= UPPER(OLD.type);
+END //
+
 delimiter ;
