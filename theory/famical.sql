@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.21, for macos10.15 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for osx10.16 (x86_64)
 --
 -- Host: localhost    Database: famical
 -- ------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE TABLE `consults` (
   `diagnosis` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`docid`,`pid`,`cdate`),
   KEY `pid` (`pid`),
-  CONSTRAINT `consults_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `patient` (`userid`),
+  CONSTRAINT `consults_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `users` (`userid`),
   CONSTRAINT `consults_ibfk_2` FOREIGN KEY (`docid`) REFERENCES `doctor` (`docid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -42,30 +42,9 @@ CREATE TABLE `consults` (
 
 LOCK TABLES `consults` WRITE;
 /*!40000 ALTER TABLE `consults` DISABLE KEYS */;
-INSERT INTO `consults` VALUES ('614000','23257','2020-12-09','','',''),('615000','23257','2020-12-09','ORS','','Dehydration');
+INSERT INTO `consults` VALUES ('33255','23257','2021-05-10','Calpol','High Temperature','False Covid Alarm');
 /*!40000 ALTER TABLE `consults` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `uppercase1` BEFORE INSERT ON `consults` FOR EACH ROW BEGIN
-  SET NEW.pid = UPPER(NEW.pid);
-  SET NEW.docid = UPPER(NEW.docid);
-  SET NEW.prescriptions = UPPER(NEW.prescriptions);
-  SET NEW.medtests = UPPER(NEW.medtests);
-  SET NEW.diagnosis = UPPER(NEW.diagnosis);
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `doctor`
@@ -92,7 +71,7 @@ CREATE TABLE `doctor` (
 
 LOCK TABLES `doctor` WRITE;
 /*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
-INSERT INTO `doctor` VALUES ('33256','23257','MBBS, MD','SAHYADRI ','ORTHOPAEDIC');
+INSERT INTO `doctor` VALUES ('33255','23256','MBBS, MD, Mphil','Sahyadri Hospital, Yerwada','ORTHOPAEDICS'),('33256','23257','MBBS','INLAKS & BUDHRANI HOSPITAL, KOREGAON PARK','GENERAL MEDICINE'),('33257','23258','MMBS, MD','CITY HOSPITAL','CARDIOLOGY'),('33264','23265','MBBS','OLD CITY HOSPITAL','PAEDIATRICS');
 /*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -123,7 +102,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `before_update_doctor` BEFORE UPDATE ON `doctor` FOR EACH ROW BEGIN
 
@@ -165,8 +144,8 @@ CREATE TABLE `family` (
   `type` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`userid`,`memberid`),
   KEY `memberid` (`memberid`),
-  CONSTRAINT `family_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `patient` (`userid`),
-  CONSTRAINT `family_ibfk_2` FOREIGN KEY (`memberid`) REFERENCES `patient` (`userid`)
+  CONSTRAINT `family_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`),
+  CONSTRAINT `family_ibfk_2` FOREIGN KEY (`memberid`) REFERENCES `users` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -176,28 +155,9 @@ CREATE TABLE `family` (
 
 LOCK TABLES `family` WRITE;
 /*!40000 ALTER TABLE `family` DISABLE KEYS */;
-INSERT INTO `family` VALUES ('33256','614000','FATHER'),('33256','615000','MOTHER'),('614000','33256',''),('615000','33256','');
+INSERT INTO `family` VALUES ('33256','614000','father'),('614000','33256','child');
 /*!40000 ALTER TABLE `family` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `uppercase5` BEFORE INSERT ON `family` FOR EACH ROW BEGIN
-  SET NEW.userid = UPPER(NEW.userid);
-  SET NEW.memberid = UPPER(NEW.memberid);
-  SET NEW.type= UPPER(NEW.type);
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `patient`
@@ -208,11 +168,11 @@ DROP TABLE IF EXISTS `patient`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `patient` (
   `userid` varchar(25) NOT NULL,
-  `weight` float DEFAULT NULL,
-  `height` float DEFAULT NULL,
-  `bp` float DEFAULT NULL,
+  `weight` int DEFAULT NULL,
+  `height` int DEFAULT NULL,
   `bldgrp` varchar(5) DEFAULT NULL,
   `allergies` varchar(100) DEFAULT NULL,
+  `bp` double DEFAULT NULL,
   PRIMARY KEY (`userid`),
   CONSTRAINT `patient_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -224,63 +184,9 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES ('241919',NULL,NULL,NULL,NULL,NULL),('33256',NULL,NULL,NULL,NULL,NULL),('614000',NULL,NULL,NULL,NULL,NULL),('615000',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `patient` VALUES ('33255',NULL,NULL,'B+',NULL,NULL),('33256',83,176,'O+','None',180),('33257',NULL,NULL,'O+',NULL,NULL),('33264',NULL,NULL,'B+',NULL,NULL),('614000',NULL,NULL,'O+',NULL,NULL);
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `uppercase3` BEFORE INSERT ON `patient` FOR EACH ROW BEGIN
-  SET NEW.userid = UPPER(NEW.userid);
-  SET NEW.bldgrp = UPPER(NEW.bldgrp);
-  SET NEW.allergies = UPPER(NEW.allergies);
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `before_update_patient` BEFORE UPDATE ON `patient` FOR EACH ROW BEGIN
-
-    IF new.weight = 0 THEN
-        SET new.weight = old.weight;
-    END IF;
-
-    IF new.height = 0 THEN
-        SET new.height = old.height;
-    END IF;
-
-    IF new.bp = 0 THEN
-        SET new.bp = old.bp;
-    END IF;
-
-    IF new.allergies = '' THEN
-        SET new.allergies = upper(old.allergies);
-    ELSE
-        SET new.allergies = upper(old.allergies+", "+new.allergies);
-    END IF;
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `personal_details`
@@ -315,7 +221,7 @@ CREATE TABLE `personal_details` (
 
 LOCK TABLES `personal_details` WRITE;
 /*!40000 ALTER TABLE `personal_details` DISABLE KEYS */;
-INSERT INTO `personal_details` VALUES ('241919','KRISHNA','GAIKWAD',9158414000,'KRISHNAGAIKWAD10@GMAIL.COM','2000-04-09 00:00:00','402','HANUMAN NAGAR','PUNE','MAHARASHTRA',411036,'MALE'),('33256','SOMESHWAR','GAIKWAD',7775069747,'GAIKWADSOMESHWAR@GMAIL.COM','1999-12-15 00:00:00','94/A/3/1','MUNDHWA','PUNE','MAHARASHTRA',411036,'MALE'),('614000','KIRAN','GAIKWAD',9158614000,'KIRANGAIKWAD@GMAIL.COM','1973-01-11 00:00:00','94/A/3/1','MUNDHWA','PUNE','MAHARASHTRA',411036,'MALE'),('615000','DEEPIKA','GAIKWAD',9158615000,'2015NMJADHAV@GMAIL.COM','1980-02-24 00:00:00','94/A/3/1','MUNDHWA','PUNE','MAHARASHTRA',411036,'FEMALE');
+INSERT INTO `personal_details` VALUES ('33255','SHREYAS','KALRAO',9511268012,'SHREYASKALRAO2001@GMAIL.COM','2001-01-16 00:00:00','23','SAHKARNAGAR','PUNE','MAHARASHTRA',411009,'MALE'),('33256','SOMESHWAR','GAIKWAD',7775069747,'GAIKWADSOMESHWAR6@GMAIL.COM','1999-12-15 00:00:00','94/A/3/1','MUNDHWA','PUNE','MAHARASHTRA',411036,'MALE'),('33257','SUSHANT','SONTAKKE',7057019322,'SMSONTAKKE111@GMAIL.COM','2000-05-16 00:00:00','10','RICH STREET','ICHALKARANJI','MAHARASHTRA',416515,'MALE'),('33264','YASH','RATHI',7385305000,'YASHRATHI878@GMAIL.COM','2000-06-12 00:00:00','43','POOR STREET','SANGLI','MAHARASHTRA',416406,'MALE'),('614000','KIRAN','GAIKWAD',9158614000,'KIRANGAIKWAD@GMAI.COM','1973-01-11 00:00:00','94/A/3/1','MUNDHWA','PUNE','MAHARASHTRA',411036,'MALE');
 /*!40000 ALTER TABLE `personal_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -416,7 +322,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('241919','$2a$08$B0yVNtOVgBbJ5bNislEb/eM/r0mn2b9CalNDMYHd5Hpi6HlVeNNAG'),('33256','$2a$08$YJ6TkmdhGADo/V2FCzFeY.InlL4qtqcxE/mBFOOGgOlHeFnXp2blC'),('614000','$2a$08$DRGLlQtemy1dZU1KOnOedunVftxck3eTEZcay/4fUxHvk3zut1M3e'),('615000','$2a$08$V5VRpnkxH7q/t2iolw//WOIprYsURZaPf/zSNjgD5M075kL8/Kf3i');
+INSERT INTO `users` VALUES ('33255','$2a$08$Pna9lhKeUCY7rr4QGWpEb.8XMO4CZXAWmjjmeBQFLdibTQJagZo9S'),('33256','$2a$08$sbnZ8ZfSElSE9ft/hoPKwOafOPOPxJN//QBYZRCTwVZHXP7NpRPl6'),('33257','$2a$08$cP2CprfK7uGvYDNp2QcVQeWIJxsXNQgqugxdLAqIduC9HRar7FoAC'),('33264','$2a$08$uaGZLaYn3Yn.J3.L8kbACugkAFvpTBp0Q4rDQHwbo6.LhC.8kXoJq'),('614000','$2a$08$6KGCdlVJHwIafwqwzjdS3uovtZ2VfqVbZnjsuZnuTy2oSz29FryS6');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -429,4 +335,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-07 10:35:40
+-- Dump completed on 2021-05-02 13:25:16
