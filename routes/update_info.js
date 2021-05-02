@@ -58,7 +58,7 @@ router.post('/update_personal', async function(req, res, next) {
 router.post('/update_professional', async function(req, res, next) {
   userid = req.session.userid;
   var qualification = req.body.qualification;
-  var hospital = req.body.Hospital;
+  var hospital = req.body.hospital;
   var department = req.body.department;
 
   db.query('UPDATE doctor SET qualification = ?, hospital = ?, department = ? WHERE userid = ?', [qualification, hospital, department, userid], async function(error, results) {
@@ -88,6 +88,8 @@ router.post('/book_appointment', async function(req, res, next) {
   var pid = req.session.userid;
   var docid = req.body.docid;
   var cdate = req.body.consultdate;
+
+  console.log(pid);
 
   var i;
   for(i = 0; i < cdate.length; i++) {
